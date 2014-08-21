@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item_id: MyString
+  description: MyString
+  measure: MyString
+  cost: 
+
+two:
+  item_id: MyString
+  description: MyString
+  measure: MyString
+  cost: 
