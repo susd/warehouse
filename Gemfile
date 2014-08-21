@@ -21,6 +21,9 @@ gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'puma'
 
+gem 'bootstrap-sass'
+gem 'money-rails'
+
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug'

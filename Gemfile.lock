@@ -32,6 +32,8 @@ GEM
       rake (>= 0.8.7)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
+    bootstrap-sass (3.2.0.1)
+      sass (~> 3.2)
     builder (3.2.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -69,6 +71,15 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     minitest (5.4.0)
+    monetize (0.3.0)
+      money (~> 6.1.0.beta1)
+    money (6.1.1)
+      i18n (~> 0.6.4)
+    money-rails (0.12.0)
+      activesupport (>= 3.0)
+      monetize (~> 0.3.0)
+      money (~> 6.1.1)
+      railties (>= 3.0)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -168,10 +179,12 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bootstrap-sass
   coffee-rails (~> 4.0.0)
   devise
   jbuilder (~> 2.0)
   jquery-rails
+  money-rails
   omniauth-google-oauth2
   pry-rails
   puma
