@@ -1,0 +1,17 @@
+
+<h1>Welcome</h1>
+
+<% if user_signed_in? %>
+  <p>You are signed-in as:</p>
+  
+  <p>Email: <%= current_user.email %></p>
+  <p>Name: <%= current_user.name %></p>
+  
+  <p><%= image_tag current_user.google_image_url if current_user.google_image_url.present? %></p>
+  
+  <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+<% else %>
+
+  <%= link_to 'Sign in', new_user_session_path %>
+  
+<% end %>

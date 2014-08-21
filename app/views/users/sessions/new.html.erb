@@ -1,0 +1,16 @@
+<% if user_signed_in? %>
+  <p>You are signed-in as:</p>
+  
+  <p>Email: <%= current_user.email %></p>
+  <p>Name: <%= current_user.name %></p>
+  
+  <p><%= image_tag current_user.google_image_url if current_user.google_image_url.present? %></p>
+  
+  <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+<% else %>
+
+  <p><%= link_to 'Sign in with Google', user_omniauth_authorize_path(:google_oauth2), :class => 'btn btn-primary' %></p>
+  <p>
+    If you are a presented with a Google sign-in form, use your SUSD email information. If you are already signed-in, you will be asked to give access to the Family Data Manager.
+  </p>
+<% end %>
