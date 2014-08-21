@@ -22,6 +22,8 @@ gem 'omniauth-google-oauth2'
 gem 'puma'
 
 gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+
 gem 'money-rails'
 
 group :development, :test do
