@@ -32,5 +32,6 @@ group :development, :test do
   gem 'spring'
   gem 'annotate'
   gem 'quiet_assets'
+  gem 'pry-rails'
 end
 
