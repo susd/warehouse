@@ -8,6 +8,43 @@
 </head>
 <body>
 
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">SUSD Warehouse Orders</a>
+    </div>
+    
+    <div class="collapse navbar-collapse" id="main-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <%= active_li(controller: 'products') do %>
+          <%= link_to 'Catalog', products_path %>
+        <% end %>
+        <li>
+          <a href="#">Link</a>
+        </li>
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <li class="navbar-text">
+          Signed in as <%= current_user.name %>
+          <% if current_user.google_image_url.present? %>
+            <%= image_tag current_user.google_image_url, class: 'avatar-sm' %>
+          <% end %>
+        </li>
+        <li><%= link_to 'Sign-out', '#' %></li>
+      </ul>
+    </div>
+    
+    
+  </div>
+</nav>
+
 <div class="container">
   <%= yield %>
 </div>

@@ -1,2 +1,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+body{
+  padding: 70px 0 0 0;
+}
+
+.avatar-sm{
+  @extend .img-circle;
+  position: relative;
+  width: 24px;
+  height: auto;
+  margin: -7px 0 -5px 0;
+}
