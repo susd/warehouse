@@ -4,10 +4,10 @@ one:
   item_id: MyString
   description: MyString
   measure: MyString
-  cost: 
-
+  cost_cents: 500
+#
 two:
   item_id: MyString
   description: MyString
   measure: MyString
-  cost: 
+  cost_cents: 500
