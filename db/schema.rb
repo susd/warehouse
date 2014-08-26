@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140826171001) do
+ActiveRecord::Schema.define(version: 20140826213829) do
+
+  create_table "imports", force: true do |t|
+    t.string   "catalog_file"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "line_items", force: true do |t|
     t.integer  "product_id"
