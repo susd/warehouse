@@ -1,0 +1,16 @@
+<%= form_for @import do |f| %>
+  
+  <p class="help-block">
+    Choose the catalog CSV export from Excel
+  </p>
+  
+  <fieldset>
+    <div class="form-group">
+      <%= f.label :catalog_file %>
+      <%= f.file_field :catalog_file %>
+    </div>
+  </fieldset>
+  
+  <%= f.submit %>
+
+<% end %>

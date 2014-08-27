@@ -1,9 +1,27 @@
+# == Schema Information
+#
+# Table name: product_groups
+#
+#  id           :integer          not null, primary key
+#  name         :string(255)
+#  budget       :string(255)
+#  created_at   :datetime
+#  updated_at   :datetime
+#  group_number :integer
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  budget: MyString
+# ["WH-02", " - ", "OFFICE SUPPLIES"]
+office_supplies:
+  group_number: 2
+  name: 'Office Supplies'
+  budget: ''
 
-two:
-  name: MyString
-  budget: MyString
+# one:
+#   name: MyString
+#   budget: MyString
+#
+# two:
+#   name: MyString
+#   budget: MyString

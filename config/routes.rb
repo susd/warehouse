@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   resources :orders
-
   resources :sites
-
   resources :products
+  resources :imports, only: [:new, :create]
 
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
+  
   
   root to: 'pages#index'
   # The priority is based upon order of creation: first created -> highest priority.

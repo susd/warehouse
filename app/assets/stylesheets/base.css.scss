@@ -12,3 +12,12 @@ body{
   height: auto;
   margin: -7px 0 -5px 0;
 }
+
+.products-table{
+  tr:nth-child(odd) td:first-child, tr:nth-child(even) td:first-child{
+    min-width: 5.5em;
+  }
+  tr th:last-child, tr td:last-child{
+    text-align: right;
+  }
+}

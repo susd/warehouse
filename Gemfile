@@ -17,14 +17,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Rails Html Sanitizer for HTML sanitization
 # gem 'rails-html-sanitizer', '~> 1.0'
 
+gem 'puma'
 gem 'devise'
 gem 'omniauth-google-oauth2'
-gem 'puma'
-
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
-
 gem 'money-rails'
+gem 'carrierwave'
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
@@ -38,5 +37,10 @@ group :development, :test do
   gem 'annotate'
   gem 'quiet_assets'
   gem 'pry-rails'
+end
+
+group :test do
+  gem 'guard-minitest'
+  gem 'minitest-reporters'
 end
 

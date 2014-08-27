@@ -1,18 +1,16 @@
 # == Schema Information
 #
-# Table name: product_groups
+# Table name: imports
 #
 #  id           :integer          not null, primary key
-#  name         :string(255)
-#  budget       :string(255)
+#  catalog_file :string(255)
 #  created_at   :datetime
 #  updated_at   :datetime
-#  group_number :integer
 #
 
 require 'test_helper'
 
-class ProductGroupTest < ActiveSupport::TestCase
+class ImportTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
