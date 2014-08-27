@@ -39,3 +39,8 @@ group :development, :test do
   gem 'pry-rails'
 end
 
+group :test do
+  gem 'guard-minitest'
+  gem 'minitest-reporters'
+end
+
