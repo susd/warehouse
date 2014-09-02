@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827185806) do
+ActiveRecord::Schema.define(version: 20140902220002) do
 
   create_table "imports", force: true do |t|
     t.string   "catalog_file"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20140827185806) do
   create_table "line_items", force: true do |t|
     t.integer  "product_id"
     t.integer  "order_id"
-    t.integer  "quantity"
+    t.integer  "quantity",       default: 1
     t.integer  "total_cents",    default: 0,     null: false
     t.string   "total_currency", default: "USD", null: false
     t.datetime "created_at"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20140827185806) do
   create_table "orders", force: true do |t|
     t.integer  "site_id"
     t.integer  "user_id"
-    t.string   "state"
+    t.integer  "state",      limit: 255, default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

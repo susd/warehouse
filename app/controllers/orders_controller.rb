@@ -14,6 +14,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
+    @groups = ProductGroup.includes(:products)
     @order = Order.new
   end
 
@@ -69,6 +70,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:site_id, :user_id, :state)
+      params.require(:order).permit(:site_id, :state).merge(user_id: current_user.id)
     end
 end

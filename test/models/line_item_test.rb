@@ -15,7 +15,13 @@
 require 'test_helper'
 
 class LineItemTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @product = products(:paper)
+  end
+  
+  test "Invalid if quantity < 0" do
+    line_item = LineItem.new(product: @product, quantity: 0)
+    refute line_item.valid?
+    refute line_item.save
+  end
 end

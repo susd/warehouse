@@ -18,14 +18,7 @@
           </thead>
 
           <tbody>
-            <% group.products.each do |product| %>
-              <tr>
-                <td><%= product.item_id %></td>
-                <td><%= product.description %></td>
-                <td><%= product.measure %></td>
-                <td><%= product.cost %></td>
-              </tr>
-            <% end %>
+            <%= render partial: 'products/product_row', collection: group.products, as: 'product' %>
           </tbody>
         </table>
       <% end %>
