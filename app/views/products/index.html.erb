@@ -1,27 +1,12 @@
 <div class="page-header">
   <h1>Inventory</h1>
+  <%= link_to 'New Product', new_product_path %>
 </div>
 
 <div class="container">
   <div class="row">
     <div class="col-md-8">
-      <% @groups.each do |group| %>
-        <h3><%= group.name %></h3>
-        <table class="products-table table table-striped">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Description</th>
-              <th>UOM</th>
-              <th>Cost</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <%= render partial: 'products/product_row', collection: group.products, as: 'product' %>
-          </tbody>
-        </table>
-      <% end %>
+      <%= render @product_groups %>
     </div>
     <div class="col-md-4">
       Order form
@@ -31,10 +16,3 @@
 
 <br>
 
-<%= link_to 'New Product', new_product_path %>
-
-<% if false %>
-  <td><%= link_to 'Show', product %></td>
-  <td><%= link_to 'Edit', edit_product_path(product) %></td>
-  <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-<% end %>

@@ -1,0 +1,15 @@
+<h3><%= product_group.name %></h3>
+<table class="products-table table table-striped">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Description</th>
+      <th>UOM</th>
+      <th>Cost</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'products/product_row', collection: product_group.products, as: 'product' %>
+  </tbody>
+</table>
