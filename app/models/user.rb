@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :rememberable, :trackable, :validatable, :omniauthable
          
   has_many :orders
+  belongs_to :site
   
   def self.new_with_session(params,session)
     if session["devise.user_attributes"]
