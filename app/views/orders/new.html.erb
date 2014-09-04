@@ -4,7 +4,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
       <% @groups.each do |group| %>
         <h3><%= group.name %></h3>
         <table class="products-table table table-striped">
@@ -30,8 +30,40 @@
         </table>
       <% end %>
     </div>
-    <div class="col-md-4">
-      Order form
+    <div class="col-md-6">
+      <%= form_for @order do |f| %>
+        <% if @order.line_items.any? %>
+          <table class="table">
+            <thead>
+              <tr>Item</tr>
+              <tr>Quantity</tr>
+              <tr>Total</tr>
+            </thead>
+            <tbody>
+              <%= f.fields_for :line_items do |n| %>
+                <tr>
+                  <td>
+                    <div class="form-control-static">
+                      <%= n.object.product.description.truncate(20) %>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <%= n.label :quantity %>
+                      <%= n.text_field :quantity %>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-control-static">
+                      <%= number_to_currency n.object.total %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>
