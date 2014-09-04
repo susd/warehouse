@@ -26,11 +26,9 @@
           <%= link_to 'Inventory', products_path %>
         <% end %>
         <%= active_li(controller: 'orders') do %>
-          <%= link_to 'Order History', orders_path %>
+          <%= link_to 'Orders', orders_path %>
         <% end %>
-        <%= active_li(controller: 'imports') do %>
-          <%= link_to 'Import', new_import_path %>
-        <% end %>
+        
       </ul>
       
       <ul class="nav navbar-nav navbar-right">

@@ -1,17 +1,19 @@
 <div class="page-header">
   <h1>Inventory</h1>
-  <%= link_to 'New Product', new_product_path %>
+  <ul class="nav nav-pills">
+    <%= active_li(controller: 'imports', action: 'new') do %>
+      <%= link_to 'New Product', new_product_path %>
+    <% end %>
+    <%= active_li(controller: 'imports') do %>
+      <%= link_to 'Import', new_import_path %>
+    <% end %>
+  </ul>
+  
+  
 </div>
 
 <div class="container">
-  <div class="row">
-    <div class="col-md-8">
-      <%= render @product_groups %>
-    </div>
-    <div class="col-md-4">
-      Order form
-    </div>
-  </div>
+  <%= render @product_groups %>
 </div>
 
 <br>

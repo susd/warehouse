@@ -15,11 +15,13 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @groups = ProductGroup.includes(:products)
-    @order = Order.new
+    @order = Order.new(user_id: current_user)
   end
 
   # GET /orders/1/edit
   def edit
+    @groups = ProductGroup.includes(:products)
+    @order = find_current_order
   end
 
   # POST /orders
@@ -71,5 +73,10 @@ class OrdersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
       params.require(:order).permit(:site_id, :state).merge(user_id: current_user.id)
+    end
+    
+    def find_current_order
+      site_order = current_user.site.orders.where(state: 0).order(updated_at: :desc).first 
+      site_order ||= Order.new(user_id: current_user, site: current_user.site)
     end
 end

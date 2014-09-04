@@ -1,24 +1,29 @@
-<h1>Listing orders</h1>
+<div class="page-header">
+  <h1>Listing orders</h1>
+</div>
+
+
 
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>Order</th>
       <th>Site</th>
-      <th>User</th>
+      <th>Started by</th>
       <th>State</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @orders.each do |order| %>
       <tr>
+        <td><%= order.id %></td>
         <td><%= order.site.name %></td>
         <td><%= order.user.name %></td>
         <td><%= order.state %></td>
-        <td><%= link_to 'Show', order %></td>
         <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Cancel', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +31,4 @@
 
 <br>
 
-<%= link_to 'New Order', new_order_path %>
+
