@@ -5,7 +5,7 @@
 #  id             :integer          not null, primary key
 #  product_id     :integer
 #  order_id       :integer
-#  quantity       :integer
+#  quantity       :integer          default(1)
 #  total_cents    :integer          default(0), not null
 #  total_currency :string(255)      default("USD"), not null
 #  created_at     :datetime
