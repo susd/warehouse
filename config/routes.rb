@@ -2,11 +2,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
   resources :orders
-  resources :sites
   resources :products
   resources :imports, only: [:new, :create]
   
   namespace :admin do
+    resources :sites
     resources :users
   end
   

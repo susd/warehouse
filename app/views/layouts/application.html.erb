@@ -17,7 +17,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">SUSD Warehouse Orders</a>
+      <a class="navbar-brand" href="/">SUSD Warehouse Orders</a>
+      
     </div>
     
     <div class="collapse navbar-collapse" id="main-navbar-collapse">
@@ -28,10 +29,18 @@
         <%= active_li(controller: 'orders') do %>
           <%= link_to 'Orders', orders_path %>
         <% end %>
-        
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <%= link_to admin_sites_path, {class: 'dropdown-toggle', data:{toggle: 'dropdown'} } do %>
+            Admin <span class="caret"></span>
+          <% end %>
+          <ul class="dropdown-menu" role="menu">
+            <li><%= link_to 'Sites', admin_sites_path %></li>
+            <li><%= link_to 'Users', admin_users_path %></li>
+          </ul>
+        </li>
         <li class="navbar-text">
           Signed in as <%= current_user.name %>
           <% if current_user.google_image_url.present? %>
@@ -41,7 +50,6 @@
         <li><%= link_to 'Sign-out', '#' %></li>
       </ul>
     </div>
-    
     
   </div>
 </nav>
