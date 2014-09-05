@@ -1,0 +1,12 @@
+<%= form_for [:admin, @user] do |f| %>
+
+<div class="form-group">
+  <p class="form-control-static">
+    <%= @user.email %>
+  </p>
+  <p class="form-control-static">
+    <%= @user.name %>
+  </p>
+</div>
+
+<% end %>
