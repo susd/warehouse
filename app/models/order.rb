@@ -32,4 +32,8 @@ class Order < ActiveRecord::Base
     current_item
   end
   
+  def editable?
+    true
+  end
+  
 end

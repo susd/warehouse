@@ -1,5 +1,7 @@
 <div class="page-header">
   <h1>Inventory</h1>
+  
+  <% if current_user.admin? %>
   <ul class="nav nav-pills">
     <%= active_li(controller: 'imports', action: 'new') do %>
       <%= link_to 'New Product', new_product_path %>
@@ -8,7 +10,7 @@
       <%= link_to 'Import', new_import_path %>
     <% end %>
   </ul>
-  
+  <% end %>
   
 </div>
 

@@ -4,7 +4,13 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    # if admin or warehouse show all
+    # if om show site orders
+    if user_sees_all_orders?
+      @orders = Order.order(created_at: :desc)
+    else
+      @orders = orders_for_user_site
+    end
   end
 
   # GET /orders/1
@@ -66,17 +72,30 @@ class OrdersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  def set_order
+    @order = Order.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:site_id, :state).merge(user_id: current_user.id)
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def order_params
+    params.require(:order).permit(:site_id, :state).merge(user_id: current_user.id)
+  end
+  
+  def find_current_order
+    site_order = current_user.site.orders.where(state: 0).order(updated_at: :desc).first 
+    site_order ||= Order.new(user_id: current_user, site: current_user.site)
+  end
+  
+  def user_sees_all_orders?
+    current_user.admin? || current_user.warehouse?
+  end
+  
+  def orders_for_user_site
+    if current_user.site.present?
+      current_user.site.orders.order(created_at: :desc)
+    else
+      []
     end
-    
-    def find_current_order
-      site_order = current_user.site.orders.where(state: 0).order(updated_at: :desc).first 
-      site_order ||= Order.new(user_id: current_user, site: current_user.site)
-    end
+  end
+  
 end

@@ -68,4 +68,20 @@ class User < ActiveRecord::Base
   def role_names
     roles.pluck(:name).join(', ')
   end
+  
+  def admin?
+    roles.pluck(:name).include? 'Admin'
+  end
+  
+  def warehouse?
+    roles.pluck(:name).include? 'Warehouse'
+  end
+  
+  def office?
+    roles.where(name: 'Office').any?
+  end
+  
+  def can_edit_orders?
+    roles.any?
+  end
 end

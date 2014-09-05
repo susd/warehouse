@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, except: :index
-  before_action :set_roles, except: :index
+  before_action :set_roles_and_sites, except: :index
   
   def index
     @users = User.all
@@ -23,11 +23,12 @@ class Admin::UsersController < ApplicationController
     @user = User.find params[:id]
   end
   
-  def set_roles
+  def set_roles_and_sites
     @roles = Role.all.map{|r| [r.name, r.id]}
+    @sites = Site.all.map{|s| [s.name, s.id]}
   end
   
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :role_ids)
+    params.require(:user).permit(:first_name, :last_name, :role_ids, :site_id)
   end
 end
