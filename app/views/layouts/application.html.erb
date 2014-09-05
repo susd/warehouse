@@ -31,7 +31,9 @@
         <% end %>
       </ul>
       
+      
       <ul class="nav navbar-nav navbar-right">
+        <% if signed_in? %>
         <li class="dropdown">
           <%= link_to admin_sites_path, {class: 'dropdown-toggle', data:{toggle: 'dropdown'} } do %>
             Admin <span class="caret"></span>
@@ -41,14 +43,22 @@
             <li><%= link_to 'Users', admin_users_path %></li>
           </ul>
         </li>
+        
         <li class="navbar-text">
           Signed in as <%= current_user.name %>
           <% if current_user.google_image_url.present? %>
             <%= image_tag current_user.google_image_url, class: 'avatar-sm' %>
           <% end %>
         </li>
-        <li><%= link_to 'Sign-out', '#' %></li>
+        <li><%= link_to 'Sign-out', destroy_user_session_path, method: :delete %></li>
+        <% else %>
+        <li>
+          <%= link_to 'Sign-in', new_user_session_path %>
+        </li>
+        <% end %>
       </ul>
+      
+      
     </div>
     
   </div>
