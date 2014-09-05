@@ -3,7 +3,7 @@ module OrderWorkflow
   
   included do
     include AASM
-    enum state: { draft: 0, pending: 1, fulfilled: 2, archived: 3, deleted: 4 }
+    enum state: { draft: 0, pending: 1, fulfilled: 2, archived: 3, canceled: 4 }
     
     
     aasm :column => :state, :whiny_transitions => false do
@@ -11,7 +11,7 @@ module OrderWorkflow
       state :pending
       state :fulfilled
       state :archived
-      state :deleted
+      state :canceled
 
       event :submit do
         transitions from: :draft, to: :pending
@@ -23,6 +23,10 @@ module OrderWorkflow
     
       event :archive do
         transitions from: :fulfilled, to: :archived
+      end
+      
+      event :cancel do
+        transitions from: [:draft, :pending], to: :canceled
       end
     end
     

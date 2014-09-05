@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  after_action :authorize_for_orders
 
   # GET /orders
   # GET /orders.json
@@ -96,6 +97,10 @@ class OrdersController < ApplicationController
     else
       []
     end
+  end
+  
+  def authorize_for_orders
+    authorize! { signed_in? }
   end
   
 end
