@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904214808) do
+ActiveRecord::Schema.define(version: 20140905171715) do
 
   create_table "imports", force: true do |t|
     t.string   "catalog_file"
@@ -63,6 +63,17 @@ ActiveRecord::Schema.define(version: 20140904214808) do
   end
 
   add_index "products", ["product_group_id"], name: "index_products_on_product_group_id"
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles_users", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
 
   create_table "sites", force: true do |t|
     t.string   "name"
