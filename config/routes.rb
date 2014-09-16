@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
-  resources :orders
+  resources :orders do
+    resources :line_items
+  end
+  
   resources :products
   resources :imports, only: [:new, :create]
   

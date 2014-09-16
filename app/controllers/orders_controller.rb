@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_groups, only: [:show, :new, :edit]
   after_action :authorize_for_orders
 
   # GET /orders
@@ -21,20 +22,18 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @groups = ProductGroup.includes(:products)
     @order = Order.new(user_id: current_user)
   end
 
   # GET /orders/1/edit
   def edit
-    @groups = ProductGroup.includes(:products)
     @order = order_for_user
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
+    @order = Order.new( order_params.merge(user_id: current_user.id) )
 
     respond_to do |format|
       if @order.save
@@ -55,6 +54,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
+        set_groups
         format.html { render :edit }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
@@ -76,10 +76,14 @@ class OrdersController < ApplicationController
   def set_order
     @order = Order.find(params[:id])
   end
+  
+  def set_groups
+    @groups = ProductGroup.includes(:products)
+  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def order_params
-    params.require(:order).permit(:site_id, :state).merge(user_id: current_user.id)
+    params.require(:order).permit(:site_id, :state, line_items_attributes: [:id, :quantity, :product_id, :_destroy])
   end
   
   def user_sees_all_orders?

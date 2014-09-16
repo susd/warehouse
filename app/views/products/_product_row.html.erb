@@ -1,6 +1,20 @@
+<%= form_for [order, LineItem.new], html: {class: 'form-inline'} do |f| %>
 <tr>
   <td><%= product.item_id %></td>
   <td><%= product.description %></td>
   <td><%= product.measure %></td>
   <td><%= product.cost %></td>
+  <td>
+    <div class="form-group">
+      <%= f.label :quantity, class: 'sr-only' %>
+      <%= f.text_field :quantity, placeholder: 'qty', size: 2, id: nil, class: 'line_item_quantity' %>
+    </div>
+  </td>
+  <td>
+    <div class="form-group">
+      <%= f.hidden_field :product_id, value: product.id %>
+      <%= f.submit 'Add to order', class: 'btn btn-xs btn-default' %>
+    </div>
+  </td>
 </tr>
+<% end %>

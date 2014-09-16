@@ -13,5 +13,14 @@
   <%= @order.state %>
 </p>
 
+<div class="line_items">
+  <% @order.line_items.includes(:product).each do |item| %>
+    <div class="line_item">
+      <%= item.product.item_id %><br>
+      <%= item.quantity %> | <%= item.total %>
+    </div>
+  <% end %>
+</div>
+
 <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %>
