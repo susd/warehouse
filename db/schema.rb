@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140904214808) do
+ActiveRecord::Schema.define(version: 20140905203050) do
 
   create_table "imports", force: true do |t|
     t.string   "catalog_file"
@@ -64,6 +64,17 @@ ActiveRecord::Schema.define(version: 20140904214808) do
 
   add_index "products", ["product_group_id"], name: "index_products_on_product_group_id"
 
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles_users", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
   create_table "sites", force: true do |t|
     t.string   "name"
     t.integer  "code"
@@ -90,12 +101,12 @@ ActiveRecord::Schema.define(version: 20140904214808) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "google_image_url"
-    t.integer  "site_id_id"
+    t.integer  "site_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid"
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["site_id_id"], name: "index_users_on_site_id_id"
+  add_index "users", ["site_id"], name: "index_users_on_site_id"
 
 end

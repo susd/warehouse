@@ -8,46 +8,64 @@
             <tr>
               <th>Item</th>
               <th>Description</th>
-              <th>UOM</th>
+              <th>Unit</th>
               <th>Cost</th>
+              <th>Qty</th>
+              <th></th>
             </tr>
           </thead>
 
           <tbody>
-            <%= render partial: 'products/product_row', collection: group.products, as: 'product' %>
+            <%= render partial: 'products/product_row', collection: group.products, as: 'product', locals: {order: @order} %>
           </tbody>
         </table>
       <% end %>
     </div>
     <div class="col-md-4">
-      <%= form_for(@order) do |f| %>
-        <% if @order.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+      <div class="panel panel-default" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+        <div class="panel-body">
+          <%= form_for(@order) do |f| %>
+            <% if @order.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-            <ul>
-            <% @order.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
+                <ul>
+                <% @order.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
             <% end %>
-            </ul>
-          </div>
-        <% end %>
-        
-        <table id="order_items" class="table table-striped">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>UOM</th>
-              <th>Cost</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        
-        <div class="actions">
-          <%= f.submit 'Save' %>
+      
+            <% if @order.line_items.any? %>
+      
+            <table id="order_items" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Desc</th>
+                  <th>Qty</th>
+                  <th>Unit</th>
+                  <th>Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= f.fields_for :line_items do |item_fields| %>
+                  <%= render partial: 'line_items/line_item_fields', locals: {f: item_fields} %>
+                <% end %>
+              </tbody>
+            </table>
+      
+            <div class="actions">
+              <%= f.submit 'Save Order' %>
+            </div>
+      
+            <% else %>
+              There are no items in your order yet.
+            <% end %>
+      
+          <% end %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,27 @@
+<div class="page-header">
+  <h1>Listing sites</h1>
+  <%= link_to 'New Site', new_admin_site_path %>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Abbr</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sites.each do |site| %>
+      <tr>
+        <td><%= site.name %></td>
+        <td><%= site.code %></td>
+        <td><%= site.abbr %></td>
+        <td><%= link_to 'Edit', edit_admin_site_path(site) %></td>
+        <td><%= link_to 'Destroy', [:admin, site], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

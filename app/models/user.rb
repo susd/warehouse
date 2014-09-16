@@ -20,6 +20,7 @@
 #  first_name             :string(255)
 #  last_name              :string(255)
 #  google_image_url       :string(255)
+#  site_id                :integer
 #
 
 class User < ActiveRecord::Base
@@ -29,6 +30,8 @@ class User < ActiveRecord::Base
          
   has_many :orders
   belongs_to :site
+  
+  has_and_belongs_to_many :roles
   
   def self.new_with_session(params,session)
     if session["devise.user_attributes"]
@@ -60,5 +63,25 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+  
+  def role_names
+    roles.pluck(:name).join(', ')
+  end
+  
+  def admin?
+    roles.pluck(:name).include? 'Admin'
+  end
+  
+  def warehouse?
+    roles.pluck(:name).include? 'Warehouse'
+  end
+  
+  def office?
+    roles.where(name: 'Office').any?
+  end
+  
+  def can_edit_orders?
+    roles.any?
   end
 end

@@ -4,7 +4,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def all
     user = User.from_omniauth(auth_params)
     if user.persisted?
-      flash[:notice] = "You are in..!!! Go to edit profile to see the status for the accounts"
+      flash[:notice] = "You are now signed in. You must be connected to a site and role before you can do anything."
       sign_in_and_redirect(user)
     else
       session["devise.user_attributes"] = user.attributes

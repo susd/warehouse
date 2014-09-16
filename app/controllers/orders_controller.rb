@@ -1,10 +1,18 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_groups, only: [:show, :new, :edit]
+  after_action :authorize_for_orders
 
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    # if admin or warehouse show all
+    # if om show site orders
+    if user_sees_all_orders?
+      @orders = Order.order(created_at: :desc)
+    else
+      @orders = orders_for_user_site
+    end
   end
 
   # GET /orders/1
@@ -14,20 +22,18 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @groups = ProductGroup.includes(:products)
     @order = Order.new(user_id: current_user)
   end
 
   # GET /orders/1/edit
   def edit
-    @groups = ProductGroup.includes(:products)
-    @order = find_current_order
+    @order = order_for_user
   end
 
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
+    @order = Order.new( order_params.merge(user_id: current_user.id) )
 
     respond_to do |format|
       if @order.save
@@ -48,6 +54,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
         format.json { render :show, status: :ok, location: @order }
       else
+        set_groups
         format.html { render :edit }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
@@ -66,17 +73,45 @@ class OrdersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
+  def set_order
+    @order = Order.find(params[:id])
+  end
+  
+  def set_groups
+    @groups = ProductGroup.includes(:products)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def order_params
-      params.require(:order).permit(:site_id, :state).merge(user_id: current_user.id)
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def order_params
+    params.require(:order).permit(:site_id, :state, line_items_attributes: [:id, :quantity, :product_id, :_destroy])
+  end
+  
+  def user_sees_all_orders?
+    current_user.admin? || current_user.warehouse?
+  end
+  
+  def orders_for_user_site
+    if current_user.site.present?
+      current_user.site.orders.order(created_at: :desc)
+    else
+      []
     end
-    
-    def find_current_order
-      site_order = current_user.site.orders.where(state: 0).order(updated_at: :desc).first 
-      site_order ||= Order.new(user_id: current_user, site: current_user.site)
+  end
+  
+  def order_for_user
+    if user_sees_all_orders?
+      @order = Order.find(params[:id])
+    else
+      if current_user.site.nil?
+        redirect_to orders_path, alert: "Oops you can't do that."
+      else
+        @order = current_user.site.find(params[:id])
+      end
     end
+  end
+  
+  def authorize_for_orders
+    authorize! { signed_in? }
+  end
+  
 end

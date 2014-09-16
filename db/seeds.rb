@@ -29,3 +29,13 @@ sites = [
 sites.each do |site|
   Site.where(code: site[:code]).first_or_create(site)
 end
+
+roles = [
+  { name: 'Admin' },
+  { name: 'Office' },
+  { name: 'Warehouse' }
+]
+
+roles.each do |role|
+  Role.where(name: role[:name]).first_or_create
+end
