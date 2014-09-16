@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @groups = ProductGroup.includes(:products)
-    @order = find_current_order
+    @order = order_for_user
   end
 
   # POST /orders
@@ -82,11 +82,6 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:site_id, :state).merge(user_id: current_user.id)
   end
   
-  def find_current_order
-    site_order = current_user.site.orders.where(state: 0).order(updated_at: :desc).first 
-    site_order ||= Order.new(user_id: current_user, site: current_user.site)
-  end
-  
   def user_sees_all_orders?
     current_user.admin? || current_user.warehouse?
   end
@@ -96,6 +91,18 @@ class OrdersController < ApplicationController
       current_user.site.orders.order(created_at: :desc)
     else
       []
+    end
+  end
+  
+  def order_for_user
+    if user_sees_all_orders?
+      @order = Order.find(params[:id])
+    else
+      if current_user.site.nil?
+        redirect_to orders_path, alert: "Oops you can't do that."
+      else
+        @order = current_user.site.find(params[:id])
+      end
     end
   end
   
