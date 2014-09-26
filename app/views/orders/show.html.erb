@@ -1,26 +1,52 @@
-<p>
-  <strong>Site:</strong>
-  <%= @order.site.name %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @order.user.name %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @order.state %>
-</p>
-
-<div class="line_items">
-  <% @order.line_items.includes(:product).each do |item| %>
-    <div class="line_item">
-      <%= item.product.item_id %><br>
-      <%= item.quantity %> | <%= item.total %>
+<div class="row">
+  
+  <div class="col-md-3">
+    <div>
+      <strong>Site:</strong>
+      <%= @order.site.name %>
     </div>
-  <% end %>
+    <div>
+      <strong>Started by:</strong>
+      <%= @order.user.name %>
+    </div>
+    <div>
+      <strong>State:</strong>
+      <%= @order.state %>
+    </div>
+    <div>
+      <%= link_to 'Edit', edit_order_path(@order) %> |
+      <%= link_to 'Back', orders_path %>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Item ID</th>
+          <th>Desc</th>
+          <th>Qty</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.line_items.includes(:product).each do |item| %>
+        <tr>
+          <td><%= item.product.item_id %></td>
+          <td><%= item.description %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.total %></td>
+        </tr>
+        <% end %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= @order.total %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
 </div>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>

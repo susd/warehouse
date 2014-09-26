@@ -38,4 +38,12 @@ class Order < ActiveRecord::Base
     true
   end
   
+  def total_cents
+    line_items.map {|li| li.total_cents }.sum
+  end
+  
+  def total
+    total_cents / 100
+  end
+  
 end
