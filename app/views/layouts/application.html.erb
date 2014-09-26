@@ -18,10 +18,11 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/">SUSD Warehouse Orders</a>
-      
     </div>
     
+    <% if signed_in? %>
     <div class="collapse navbar-collapse" id="main-navbar-collapse">
+      
       <ul class="nav navbar-nav">
         <%= active_li(controller: 'products') do %>
           <%= link_to 'Inventory', products_path %>
@@ -31,9 +32,7 @@
         <% end %>
       </ul>
       
-      
       <ul class="nav navbar-nav navbar-right">
-        <% if signed_in? %>
         <li class="dropdown">
           <%= link_to admin_sites_path, {class: 'dropdown-toggle', data:{toggle: 'dropdown'} } do %>
             Admin <span class="caret"></span>
@@ -43,7 +42,6 @@
             <li><%= link_to 'Users', admin_users_path %></li>
           </ul>
         </li>
-        
         <li class="navbar-text">
           Signed in as <%= current_user.name %>
           <% if current_user.google_image_url.present? %>
@@ -51,15 +49,10 @@
           <% end %>
         </li>
         <li><%= link_to 'Sign-out', destroy_user_session_path, method: :delete %></li>
-        <% else %>
-        <li>
-          <%= link_to 'Sign-in', new_user_session_path %>
-        </li>
-        <% end %>
       </ul>
       
-      
     </div>
+    <% end %>
     
   </div>
 </nav>
