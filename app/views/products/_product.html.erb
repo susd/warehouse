@@ -1,0 +1,18 @@
+<%= content_tag_for :article, product do %>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="product-item_id">
+        <%= product.item_id %>
+      </div>
+      <div class="product-desc">
+        <%= product.description %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="product-cost">
+        <%= product.cost %> per <%= product.measure %>
+      </div>
+    </div>
+  </div>
+  
+<% end %>
