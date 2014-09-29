@@ -1,0 +1,30 @@
+<table class="table table-striped order-table">
+  <thead>
+    <tr>
+      <th>Item ID</th>
+      <th>Desc</th>
+      <th>Qty</th>
+      <th>Unit</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.line_items.includes(:product).each do |item| %>
+    <tr>
+      <td><%= item.product.item_id %></td>
+      <td><%= item.description %></td>
+      <td><%= item.quantity %></td>
+      <td><%= item.measure %></td>
+      <td><%= number_to_currency item.total %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td colspan="2">
+        <strong>Total</strong>
+      </td>
+      <td><%= number_to_currency @order.total %></td>
+    </tr>
+  </tbody>
+</table>

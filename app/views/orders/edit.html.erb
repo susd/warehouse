@@ -1,6 +1,18 @@
-<h1>Editing order</h1>
+<header>
+  <div class="row">
+    <div class="col-md-2">
+      <%= link_to @order, class: 'btn btn-default' do %>
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        Cancel
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <h1><%= @order.site.name %> Order</h1>
+    </div>
+    <div class="col-md-4">
+      <strong>Started:</strong> <%= @order.created_at.to_s(:short) %>
+    </div>
+  </div>
+</header>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @order %> |
-<%= link_to 'Back', orders_path %>

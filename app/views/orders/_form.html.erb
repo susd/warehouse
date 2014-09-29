@@ -22,49 +22,9 @@
       <% end %>
     </div>
     <div class="col-md-6">
-      <div class="panel panel-default" data-spy="affix" data-offset-top="60" data-offset-bottom="60">
+      <div id="order-panel" class="panel panel-default" data-spy="affix" data-offset-top="40" data-offset-bottom="60">
         <div class="panel-body">
-          <%= form_for(@order) do |f| %>
-            <% if @order.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-                <ul>
-                <% @order.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-                </ul>
-              </div>
-            <% end %>
-      
-            <% if @order.line_items.any? %>
-      
-            <table id="order_items" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Desc</th>
-                  <th>Qty</th>
-                  <th>Unit</th>
-                  <th>Cost</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <%= f.fields_for :line_items do |item_fields| %>
-                  <%= render partial: 'line_items/line_item_fields', locals: {f: item_fields} %>
-                <% end %>
-              </tbody>
-            </table>
-      
-            <div class="actions">
-              <%= f.submit 'Save Order' %>
-            </div>
-      
-            <% else %>
-              There are no items in your order yet.
-            <% end %>
-      
-          <% end %>
+          <%= render 'order_form' %>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= order.id %></td>
+        <td><%= link_to order.id, order %></td>
         <td><%= order.site.name %></td>
         <td><%= order.user.name %></td>
         <td><%= order.state %></td>
