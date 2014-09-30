@@ -5,6 +5,16 @@ body{
   padding: 70px 0 0 0;
 }
 
+header{
+  padding-bottom: (($line-height-computed / 2) - 1);
+  margin: ($line-height-computed * 2) 0 $line-height-computed;
+  border-bottom: 1px solid $page-header-border-color;
+  h1{
+    line-height: 1;
+    margin: 0;
+  }
+}
+
 .avatar-sm{
   @extend .img-circle;
   position: relative;
@@ -43,6 +53,37 @@ body{
   }
   .line_item_quantity{
     width: 2em;
+  }
+}
+
+#order-panel{
+  width: 95%;
+  margin: 0 auto;
+  max-width: 39.6em;
+}
+
+#order_items{
+  width: 100%;
+  tr td:nth-child(3){
+    //width: 75%;
+  }
+  tr td:nth-child(4) {
+    width: 5%;
+  }
+  tr td:nth-child(5){
+    //width: 5%;
+  }
+  tr td:nth-child(6){
+    text-align: right;
+  }
+  td input{
+    width: 2em;
+  }
+}
+
+.order-table{
+  td:last-child{
+    text-align: right;
   }
 }
 

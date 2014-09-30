@@ -1,0 +1,48 @@
+<%= form_for(@order) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @order.line_items.any? %>
+
+  <table id="order_items" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Desc</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Cost</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :line_items do |item_fields| %>
+        <%= render partial: 'line_items/line_item_fields', locals: {f: item_fields} %>
+      <% end %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><%= number_to_currency @order.total %></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <%= f.submit 'Update and Save' %>
+  </div>
+
+  <% else %>
+    There are no items in your order yet.
+  <% end %>
+
+<% end %>

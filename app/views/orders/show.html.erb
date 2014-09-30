@@ -1,51 +1,42 @@
 <div class="row">
   
-  <div class="col-md-3">
-    <div>
-      <strong>Site:</strong>
-      <%= @order.site.name %>
-    </div>
-    <div>
-      <strong>Started by:</strong>
+  <div class="col-md-2">
+    <p>
+      <%= link_to orders_path, class: 'btn btn-default' do %>
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        All orders
+      <% end %>
+    </p>
+    
+    <p>
+      <strong><%= @order.site.name %></strong>
+    </p>
+    <p>
+      <strong>Started by:</strong><br>
       <%= @order.user.name %>
-    </div>
-    <div>
+    </p>
+    <p>
+      <strong>Started:</strong><br>
+      <%= @order.created_at.to_s(:short) %>
+    </p>
+    <p>
+      <strong>Edited:</strong><br>
+      <%= @order.updated_at.to_s(:short) %>
+    </p>
+    <p>
       <strong>State:</strong>
       <%= @order.state %>
-    </div>
-    <div>
-      <%= link_to 'Edit', edit_order_path(@order) %> |
-      <%= link_to 'Back', orders_path %>
-    </div>
+    </p>
   </div>
   
-  <div class="col-md-9">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Item ID</th>
-          <th>Desc</th>
-          <th>Qty</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @order.line_items.includes(:product).each do |item| %>
-        <tr>
-          <td><%= item.product.item_id %></td>
-          <td><%= item.description %></td>
-          <td><%= item.quantity %></td>
-          <td><%= item.total %></td>
-        </tr>
-        <% end %>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><%= @order.total %></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="col-md-8">
+    <%= render @order %>
+  </div>
+  
+  <div class="col-md-2">
+    <p>
+      <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary' %>
+    </p>
   </div>
   
 </div>
