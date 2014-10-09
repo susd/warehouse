@@ -25,6 +25,7 @@ gem 'autoprefixer-rails'
 gem 'money-rails'
 gem 'carrierwave'
 gem 'aasm'
+gem 'paper_trail'
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
