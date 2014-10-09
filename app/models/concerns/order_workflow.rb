@@ -8,17 +8,17 @@ module OrderWorkflow
     
     aasm :column => :state, :whiny_transitions => false do
       state :draft, :initial => true
-      state :pending
+      state :submitted
       state :fulfilled
       state :archived
       state :canceled
 
       event :submit do
-        transitions from: :draft, to: :pending
+        transitions from: :draft, to: :submitted
       end
 
       event :fulfill do
-        transitions from: :pending, to: :fulfilled
+        transitions from: :submitted, to: :fulfilled
       end
     
       event :archive do
@@ -26,7 +26,7 @@ module OrderWorkflow
       end
       
       event :cancel do
-        transitions from: [:draft, :pending], to: :canceled
+        transitions from: [:draft, :submitted], to: :canceled
       end
     end
     
