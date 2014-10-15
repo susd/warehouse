@@ -19,6 +19,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :line_items, update_only: true, allow_destroy: true
   
   has_many :products, through: :line_items
+  has_many :comments
   
   validates :user_id, presence: true
   

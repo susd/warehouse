@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :orders do
     resources :line_items
+    resources :comments, only: [:create]
   end
   
   resources :products

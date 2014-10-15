@@ -1,0 +1,15 @@
+<article class="comment media">
+  <% unless comment.user.google_image_url.nil? %>
+  <div class="pull-left">
+    <%= image_tag comment.user.google_image_url %>
+  </div>
+  <% end %>
+  <div class="media-body">
+    <h5 class="media-heading">
+      <%= comment.user.name %>
+    </h5>
+    <div class="media-content">
+      <%= simple_format comment.body %>
+    </div>
+  </div>
+</article>
