@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, except: [:index, :new, :edit, :create]
   before_action :set_groups, only: [:show, :new, :edit]
   after_action :authorize_for_orders
 
@@ -71,6 +71,14 @@ class OrdersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def submit
+    if @order.submit!
+      redirect_to orders_path, notice: 'Order submitted to warehouse'
+    else
+      redirect_to response.referrer, alert: 'Order could not be submitted'
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -111,6 +119,7 @@ class OrdersController < ApplicationController
     end
   end
   
+  # This is a stub for future authorization
   def authorize_for_orders
     authorize! { signed_in? }
   end

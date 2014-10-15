@@ -1,12 +1,16 @@
 <header>
   <div class="row">
-    <div class="col-md-2">
-      <%= link_to @order, class: 'btn btn-default' do %>
-        <span class="glyphicon glyphicon-arrow-left"></span>
-        Cancel
-      <% end %>
+    <div class="col-sm-12">
+      <p>
+        <%= link_to @order, class: 'btn btn-default' do %>
+          <span class="glyphicon glyphicon-arrow-left"></span>
+          Cancel
+        <% end %>
+      </p>
     </div>
-    <div class="col-md-6">
+  </div>
+  <div class="row">
+    <div class="col-md-8">
       <h1><%= @order.site.name %> Order</h1>
     </div>
     <div class="col-md-4">

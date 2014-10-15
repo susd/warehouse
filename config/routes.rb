@@ -2,6 +2,13 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
 
   resources :orders do
+    member do
+      put :submit
+      put :fulfill
+      put :archive
+      put :cancel
+    end
+    
     resources :line_items
     resources :comments, only: [:create]
   end

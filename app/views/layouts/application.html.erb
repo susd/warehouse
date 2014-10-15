@@ -33,6 +33,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
+        <% if current_user.admin? %>
         <li class="dropdown">
           <%= link_to admin_sites_path, {class: 'dropdown-toggle', data:{toggle: 'dropdown'} } do %>
             Admin <span class="caret"></span>
@@ -42,6 +43,7 @@
             <li><%= link_to 'Users', admin_users_path %></li>
           </ul>
         </li>
+        <% end %>
         <li class="navbar-text">
           Signed in as <%= current_user.name %>
           <% if current_user.google_image_url.present? %>

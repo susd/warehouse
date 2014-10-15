@@ -1,5 +1,6 @@
 <div class="page-header">
   <h1>Listing orders</h1>
+  <%= link_to 'New order', new_order_path, class: 'btn btn-primary' %>
 </div>
 
 
@@ -7,11 +8,12 @@
 <table class="table table-striped clickable">
   <thead>
     <tr>
-      <th>Order</th>
+      <th>Order #</th>
       <th>Site</th>
       <th>Started by</th>
       <th>State</th>
-      <th colspan="2"></th>
+      <th>Total</th>
+      <th>Options</th>
     </tr>
   </thead>
 
@@ -19,20 +21,19 @@
     <% @orders.each do |order| %>
       <tr href="<%= order_path(order) %>">
         <td>
-          <%= link_to order.id, order %>
+          <%= order.id %>
         </td>
         <td><%= order.site.name %></td>
         <td><%= order.user.name %></td>
         <td><%= order.state %></td>
-        <% if current_user.can_edit_orders? && order.editable? %>
-          <td><%= link_to 'Edit', edit_order_path(order) %></td>
-          <td><%= link_to 'Cancel', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= number_to_currency order.total %></td>
+        <% if order.editable_by?(current_user) %>
+          <td>
+            <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-default' %>
+            <%= next_step_link_for( order ) %>
+          </td>
         <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-
