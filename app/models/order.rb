@@ -11,7 +11,7 @@
 #
 
 class Order < ActiveRecord::Base
-  # enum state: { draft: 0, pending: 1, fulfilled: 2, archived: 3, deleted: 4 }
+  # enum state: { draft: 0, submitted: 1, fulfilled: 2, archived: 3, canceled: 4 }
   belongs_to :site
   belongs_to :user
   
@@ -19,10 +19,15 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :line_items, update_only: true, allow_destroy: true
   
   has_many :products, through: :line_items
+  has_many :comments
   
   validates :user_id, presence: true
   
   include OrderWorkflow
+  
+  def self.active
+    where("state < 2")
+  end
   
   def add_product(params)
     current_item = line_items.find_by(product_id: params[:product_id])

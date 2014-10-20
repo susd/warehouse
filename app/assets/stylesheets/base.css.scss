@@ -15,6 +15,16 @@ header{
   }
 }
 
+$highlight: mix(lighten(#ff0, 40%), #f00, 95%);
+
+.clickable:hover, 
+.table-striped > tbody > tr.clickable:nth-child(2n+1):hover > td, 
+.table-striped > tbody > tr.clickable:nth-child(2n+1):hover > th{
+    cursor: pointer;
+    background: none;
+    background-color: $highlight;
+}
+
 .avatar-sm{
   @extend .img-circle;
   position: relative;

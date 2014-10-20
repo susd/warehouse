@@ -1,23 +1,36 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, except: [:index, :archived, :new, :edit, :create]
   before_action :set_groups, only: [:show, :new, :edit]
   after_action :authorize_for_orders
 
   # GET /orders
   # GET /orders.json
   def index
-    # if admin or warehouse show all
-    # if om show site orders
     if user_sees_all_orders?
-      @orders = Order.order(created_at: :desc)
+      @orders = Order.active.order(created_at: :desc)
     else
       @orders = orders_for_user_site
     end
+  end
+  
+  def archived
+    # if user_sees_all_orders?
+    #   @orders = Order.archived.order(created_at: :desc)
+    # else
+    #   if current_user.site.present?
+    #     @orders = current_user.site.orders.archived.order(created_at: :desc)
+    #   else
+    #     @orders = []
+    #   end
+    # end
+    @orders = Order.archived
+    render template: 'orders/index'
   end
 
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @comments = @order.comments.order(created_at: :desc)
   end
 
   # GET /orders/new
@@ -70,6 +83,22 @@ class OrdersController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def submit
+    handle_state_change("submit!", "submitted")
+  end
+  
+  def fulfill
+    handle_state_change("fulfill!", "marked fulfilled")
+  end
+  
+  def archive
+    handle_state_change("archive!", "archived")
+  end
+  
+  def cancel
+    handle_state_change("cancel!", "cancelled")
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -87,12 +116,14 @@ class OrdersController < ApplicationController
   end
   
   def user_sees_all_orders?
-    current_user.admin? || current_user.warehouse?
+    current_user.roles.any? do |role|
+      [:admin, :warehouse, :finance].include? role
+    end
   end
   
   def orders_for_user_site
     if current_user.site.present?
-      current_user.site.orders.order(created_at: :desc)
+      current_user.site.orders.active.order(created_at: :desc)
     else
       []
     end
@@ -110,8 +141,17 @@ class OrdersController < ApplicationController
     end
   end
   
+  # This is a stub for future authorization
   def authorize_for_orders
     authorize! { signed_in? }
+  end
+  
+  def handle_state_change(state, msg)
+    if @order.send(state)
+      redirect_to orders_path, notice: "Order #{msg}."
+    else
+      redirect_to response.referrer, alert: "Order could not be #{msg}."
+    end
   end
   
 end
