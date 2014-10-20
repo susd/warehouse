@@ -33,7 +33,8 @@ end
 roles = [
   { name: 'Admin' },
   { name: 'Office' },
-  { name: 'Warehouse' }
+  { name: 'Warehouse' },
+  { name: 'Finance' }
 ]
 
 roles.each do |role|
