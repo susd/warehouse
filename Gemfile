@@ -38,6 +38,7 @@ group :development, :test do
   gem 'annotate'
   gem 'quiet_assets'
   gem 'pry-rails'
+  gem 'meta_request'
 end
 
 group :test do
