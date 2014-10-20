@@ -26,13 +26,14 @@
         <td><%= order.site.name %></td>
         <td><%= order.user.name %></td>
         <td><%= order.state %></td>
-        <td><%= number_to_currency order.total %></td>
-        <% if order.editable_by?(current_user) %>
-          <td>
+        <td><%= number_to_currency order.total %></td>        
+        <td>
+          <% if order.editable_by?(current_user) %>
+            <%= link_to 'View', order, class: 'btn btn-default' %>
             <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-default' %>
             <%= next_step_link_for( order ) %>
-          </td>
-        <% end %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
