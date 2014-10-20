@@ -90,3 +90,13 @@ header{
 .alert-notice{
   @extend .alert-success;
 }
+
+.user-prompt{
+  visibility: hidden;
+}
+
+.table tr:hover{
+  .user-prompt{
+    visibility: visible;
+  }
+}

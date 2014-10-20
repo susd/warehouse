@@ -4,7 +4,7 @@
 
 
 
-<table class="table table-striped">
+<table class="table table-striped clickable">
   <thead>
     <tr>
       <th>Order</th>
@@ -17,8 +17,10 @@
 
   <tbody>
     <% @orders.each do |order| %>
-      <tr>
-        <td><%= link_to order.id, order %></td>
+      <tr href="<%= order_path(order) %>">
+        <td>
+          <%= link_to order.id, order %>
+        </td>
         <td><%= order.site.name %></td>
         <td><%= order.user.name %></td>
         <td><%= order.state %></td>
