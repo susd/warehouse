@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
   def index
     if params[:site_id].present?
       @site = Site.find params[:site_id]
-      @orders = @site.orders.active.order(created_at: :desc)
+      @orders = orders_for_user
     else 
       redirect_to site_orders_path(current_user.site)
     end
@@ -112,6 +112,15 @@ class OrdersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def order_params
     params.require(:order).permit(:site_id, :state, line_items_attributes: [:id, :quantity, :product_id, :_destroy])
+  end
+  
+  def orders_for_user
+    if current_user.office?
+      states = [0,1,2]
+    else
+      states = [1,2]
+    end
+    @site.orders.where(state: states).order(created_at: :desc)
   end
   
   def order_for_user
