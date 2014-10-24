@@ -1,69 +1,19 @@
-<div class="page-header">
-  <h1>New Order</h1>
-</div>
-
-<div class="container">
+<header>
   <div class="row">
-    <div class="col-md-6">
-      <% @groups.each do |group| %>
-        <h3><%= group.name %></h3>
-        <table class="products-table table table-striped">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Description</th>
-              <th>UOM</th>
-              <th>Cost</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% group.products.each do |product| %>
-              <tr>
-                <td><%= product.item_id %></td>
-                <td><%= product.description %></td>
-                <td><%= product.measure %></td>
-                <td><%= product.cost %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
-    </div>
-    <div class="col-md-6">
-      <%= form_for @order do |f| %>
-        <% if @order.line_items.any? %>
-          <table class="table">
-            <thead>
-              <tr>Item</tr>
-              <tr>Quantity</tr>
-              <tr>Total</tr>
-            </thead>
-            <tbody>
-              <%= f.fields_for :line_items do |n| %>
-                <tr>
-                  <td>
-                    <div class="form-control-static">
-                      <%= n.object.product.description.truncate(20) %>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-group">
-                      <%= n.label :quantity %>
-                      <%= n.text_field :quantity %>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-control-static">
-                      <%= number_to_currency n.object.total %>
-                    </div>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+    <div class="col-sm-12">
+      <p>
+        <%= link_to @order, class: 'btn btn-default' do %>
+          <span class="glyphicon glyphicon-arrow-left"></span>
+          Cancel
         <% end %>
-      <% end %>
+      </p>
     </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>New order</h1>
+    </div>
+  </div>
+</header>
+
+<%= render 'form' %>

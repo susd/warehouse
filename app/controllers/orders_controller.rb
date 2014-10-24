@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  include OrderPermissions
   before_action :set_order, except: [:index, :archived, :new, :edit, :create]
   before_action :set_groups, only: [:show, :new, :edit]
   after_action :authorize_for_orders
@@ -6,24 +7,21 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    if user_sees_all_orders?
-      @orders = Order.active.order(created_at: :desc)
-    else
-      @orders = orders_for_user_site
+    if params[:site_id].present?
+      @site = Site.find params[:site_id]
+      @orders = @site.orders.active.order(created_at: :desc)
+    else 
+      redirect_to site_orders_path(current_user.site)
     end
   end
   
   def archived
-    # if user_sees_all_orders?
-    #   @orders = Order.archived.order(created_at: :desc)
-    # else
-    #   if current_user.site.present?
-    #     @orders = current_user.site.orders.archived.order(created_at: :desc)
-    #   else
-    #     @orders = []
-    #   end
-    # end
-    @orders = Order.archived
+    if params[:site_id].present?
+      @site = Site.find params[:site_id]
+      @orders = @site.orders.archived.order(created_at: :desc)
+    else
+      @orders = archived_orders_for_user_site
+    end
     render template: 'orders/index'
   end
 
@@ -35,7 +33,8 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @order = Order.new(user_id: current_user)
+    @order = new_order_for current_user
+    
   end
 
   # GET /orders/1/edit
@@ -115,20 +114,6 @@ class OrdersController < ApplicationController
     params.require(:order).permit(:site_id, :state, line_items_attributes: [:id, :quantity, :product_id, :_destroy])
   end
   
-  def user_sees_all_orders?
-    current_user.roles.any? do |role|
-      [:admin, :warehouse, :finance].include? role
-    end
-  end
-  
-  def orders_for_user_site
-    if current_user.site.present?
-      current_user.site.orders.active.order(created_at: :desc)
-    else
-      []
-    end
-  end
-  
   def order_for_user
     if user_sees_all_orders?
       @order = Order.find(params[:id])
@@ -141,9 +126,8 @@ class OrdersController < ApplicationController
     end
   end
   
-  # This is a stub for future authorization
-  def authorize_for_orders
-    authorize! { signed_in? }
+  def new_order_for(user)
+    Order.create(user: user, site: user.site)
   end
   
   def handle_state_change(state, msg)

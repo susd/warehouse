@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
-
-  resources :orders do
-    collection do
-      get :archived
+  
+  resources :sites, only: [:index] do
+    resources :orders, only: [:index] do
+      get :archived, on: :collection
     end
+  end
+  
+  get 'all_orders', to: 'all_orders#index', as: :all_orders
+  
+  resources :orders do
+    get :archived, on: :collection
     
     member do
       put :submit

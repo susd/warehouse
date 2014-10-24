@@ -110,3 +110,11 @@ table.clickable > tbody > tr:nth-child(2n+1):hover > td{
     visibility: visible;
   }
 }
+
+#product-list{
+  height: 75vh;
+  max-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #eee;
+}

@@ -1,6 +1,6 @@
 $(document).on 'ready page:load', ->
   $('.clickable tr').on 'click', (e) ->
-    console.log $(this).attr('href')
+    # TODO: header row should not be clickable
     Turbolinks.visit($(this).attr('href'))
     
   $('.clickable tr a').on 'click', (e) ->

@@ -81,7 +81,19 @@ class User < ActiveRecord::Base
     roles.where(name: 'Office').any?
   end
   
+  def views_all_orders?
+    roles.any? do |role|
+      %Q{Admin Warehouse Finance}.include? role.name
+    end
+  end
+  
   def can_edit_orders?
     roles.any?
+  end
+  
+  def manages_products?
+    roles.any? do |role|
+      %Q{Admin Finance}.include? role.name
+    end
   end
 end

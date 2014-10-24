@@ -1,5 +1,6 @@
 class Admin::SitesController < AdminController
   before_action :set_site, only: [:show, :edit, :update, :destroy]
+  after_action :authorize_admin
 
   # GET /sites
   # GET /sites.json
@@ -70,5 +71,9 @@ class Admin::SitesController < AdminController
     # Never trust parameters from the scary internet, only allow the white list through.
     def site_params
       params.require(:site).permit(:name, :code, :abbr)
+    end
+    
+    def authorize_admin
+      authorize!{ current_user.admin? }
     end
 end
