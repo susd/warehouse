@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = new_order_for current_user
-    
+    redirect_to edit_order_path(@order)
   end
 
   # GET /orders/1/edit
@@ -130,7 +130,7 @@ class OrdersController < ApplicationController
       if current_user.site.nil?
         redirect_to orders_path, alert: "Oops you can't do that."
       else
-        @order = current_user.site.find(params[:id])
+        @order = current_user.site.orders.find(params[:id])
       end
     end
   end
