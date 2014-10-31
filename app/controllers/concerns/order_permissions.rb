@@ -2,9 +2,7 @@ module OrderPermissions
   extend ActiveSupport::Concern
   
   def user_sees_all_orders?
-    current_user.roles.any? do |role|
-      [:admin, :warehouse, :finance].include? role
-    end
+    current_user.views_all_orders?
   end
   
   def orders_for_user_site(active = true)

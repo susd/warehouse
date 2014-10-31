@@ -100,7 +100,8 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+  
+    
   def set_order
     @order = Order.find(params[:id])
   end
@@ -124,7 +125,7 @@ class OrdersController < ApplicationController
   end
   
   def order_for_user
-    if user_sees_all_orders?
+    if current_user.views_all_orders?
       @order = Order.find(params[:id])
     else
       if current_user.site.nil?
