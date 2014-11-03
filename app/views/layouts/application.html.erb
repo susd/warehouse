@@ -28,13 +28,9 @@
           <%= active_li(controller: 'products') do %>
             <%= link_to 'Inventory', products_path %>
           <% end %>
-          <%= active_li(controller: 'orders') do %>
-            <%= link_to 'Orders', all_orders_path %>
-          <% end %>
-        <% else %>
-          <%= active_li(controller: 'orders') do %>
-            <%= link_to 'Orders', orders_path %>
-          <% end %>
+        <% end %>
+        <%= active_li(controller: 'orders') do %>
+          <%= link_to 'Orders', orders_path %>
         <% end %>
       </ul>
       
