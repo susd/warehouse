@@ -70,20 +70,20 @@ class User < ActiveRecord::Base
   end
   
   def admin?
-    roles.pluck(:name).include? 'Admin'
+    roles.pluck(:name).include? 'admin'
   end
   
   def warehouse?
-    roles.pluck(:name).include? 'Warehouse'
+    roles.pluck(:name).include? 'warehouse'
   end
   
   def office?
-    roles.where(name: 'Office').any?
+    roles.pluck(:name).include? 'office'
   end
   
   def views_all_orders?
     roles.any? do |role|
-      %Q{Admin Warehouse Finance}.include? role.name
+      %Q{admin warehouse finance}.include? role.name
     end
   end
   
@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
   
   def manages_products?
     roles.any? do |role|
-      %Q{Admin Finance}.include? role.name
+      %Q{admin finance}.include? role.name
     end
   end
 end

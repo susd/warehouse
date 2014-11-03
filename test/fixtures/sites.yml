@@ -12,12 +12,17 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  code: 1
-  abbr: MyString
+cedarcreek:
+  name: Cedarcreek
+  code: 10
+  abbr: cc
 
-two:
-  name: MyString
-  code: 1
-  abbr: MyString
+mountainview:
+  name: Mountainview
+  code: 25
+  abbr: mv
+
+district:
+  name: District Office
+  code: 5
+  abbr: do

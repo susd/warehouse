@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 
+  user: warehouse
   body: MyText
 
 two:
-  user_id: 
+  user: office_manager
   body: MyText

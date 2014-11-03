@@ -10,8 +10,9 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
+<% %w{ office warehouse custodian finance admin }.each do |role| %>
 
-two:
-  name: MyString
+<%= role %>_role:
+  name: <%= role %>
+
+<% end %>

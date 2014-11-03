@@ -3,14 +3,14 @@ require 'test_helper'
 class ProductsControllerTest < ActionController::TestCase
   setup do
     @product = products(:one)
-    @user = users(:one)
+    @user = users(:admin_user)
     sign_in @user
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:groups)
+    assert_not_nil assigns(:product_groups)
   end
 
   test "should get new" do

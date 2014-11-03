@@ -29,9 +29,20 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one:
+
+office_user:
   email: 'dude@example.com'
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
-#
-# two: {}
-#  column: value
+  site: cedarcreek
+  roles: office_role
+
+<% %w{ warehouse custodian finance admin }.each do |role| %>
+
+<%= role %>_user:
+  email: "<%= role %>@example.com"
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  site: district
+  roles: <%= "#{role}_role" %>
+  
+<% end %>
+  
