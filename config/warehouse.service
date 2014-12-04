@@ -1,0 +1,14 @@
+[Unit]
+Description=Puma service for warehouse
+
+[Service]
+WorkingDirectory=/srv/rails/warehouse/current
+SyslogIdentifier=warehouse-puma
+PIDFile=/srv/rails/warehouse/current/tmp/puma/pid
+
+ExecStart=/usr/local/bin/bundle exec "puma -C /srv/rails/warehouse/current/config/puma/production.rb"
+ExecStop=/usr/bin/kill -QUIT $MAINPID
+ExecReload=/usr/bin/kill -USR1 $MAINPID
+
+[Install]
+WantedBy=multiuser.target
