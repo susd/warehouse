@@ -2,7 +2,7 @@
 lock '3.2.1'
 
 set :application, 'warehouse'
-set :repo_url, 'app2.saugususd.org:repos/warehouse'
+set :repo_url, 'https://github.com/susd/warehouse.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
@@ -34,78 +34,129 @@ set :linked_dirs, %w{bin log public/uploads tmp/pids tmp/cache tmp/sockets}
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
+namespace :setup do
+  desc 'Upload Nginx config'
+  task :nginx do
+    on roles(:app) do
+      upload! "config/nginx_#{fetch(:stage)}.conf", "#{shared_path}/config/"
+    end
+  end
+
+  desc 'Setup service'
+  task :service do
+    on roles(:app) do
+      upload! "config/#{fetch(:application)}.service", "/lib/systemd/system/"
+      execute "systemctl daemon-reload"
+      execute "systemctl enable #{fetch(:application)}.service"
+    end
+  end
+
+  desc 'Set permissions for created dirs'
+  task :perms do
+    on roles(:app) do
+      execute "chown -R deployer: /srv/rails/#{fetch(:application)}"
+    end
+  end
+
+  task all: [
+    'deploy:check:directories',
+    'deploy:check:linked_dirs',
+    'deploy:check:make_linked_dirs',
+    'perms',
+    'nginx',
+    'deploy:secrets',
+    'deploy:db_config',
+    'deploy:check:linked_files',
+    'service',
+    'nginx:enable'
+  ]
+end
+
+
 namespace :nginx do
+
   desc 'Enable site'
   task :enable do
     on roles(:app) do
-      execute "ln -fs #{current_path}/config/nginx_#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}-nginx.conf"
+      execute "ln -fs #{shared_path}/config/nginx_#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}-nginx.conf"
     end
   end
-  
-  after 'deploy:check', :enable
-  
+
   desc 'Restart Nginx'
   task :restart do
     on roles(:app) do
       execute "systemctl restart nginx"
     end
   end
+
 end
 
-namespace :service do
-  desc 'Copy service file in place'
-  task :copy do
+namespace :systemd do
+
+  desc 'Start service'
+  task :start do
     on roles(:app) do
-      execute "cp #{release_path}/config/#{fetch(:application)}.service /usr/lib/systemd/system/; systemctl --system daemon-reload"
+      execute "systemctl start #{fetch(:application)}"
     end
   end
-  
-  desc 'Restart systemd service'
+
+  desc 'Stop service'
+  task :stop do
+    on roles(:app) do
+      execute "systemctl stop #{fetch(:application)}"
+    end
+  end
+
+  desc 'Restart service'
   task :restart do
     on roles(:app) do
-      execute "systemctl restart warehouse"
+      execute "systemctl restart #{fetch(:application)}"
     end
   end
+
+  desc 'Check service'
+  task :status do
+    on roles(:app) do
+      execute "systemctl status #{fetch(:application)}"
+    end
+  end
+
 end
 
 namespace :deploy do
-  
-  
+
   desc 'Push secrets'
-  task :config do
-    system "scp config/secrets.yml config/database.yml root@triprocker.com:/srv/rails/#{fetch(:application)}/shared/config/"
-  end
-  
-  desc 'Create tmp dirs'
-  task :dirs do
+  task :secrets do
     on roles(:app) do
-      execute "mkdir -p #{release_path}/tmp/puma"
+      upload! 'config/secrets.yml', "#{shared_path}/config/"
+    end
+    # system "scp config/secrets.yml #{fetch(:server)}:#{shared_path}/config/"
+  end
+
+  desc 'Push db config'
+  task :db_config do
+    on roles(:app) do
+      upload! 'config/database.yml', "#{shared_path}/config/"
+    end
+    # system "scp config/database.yml #{fetch(:server)}:#{shared_path}/config/"
+  end
+
+  desc 'Setup PG gem'
+  task :pg_gem do
+    on roles(:app) do
+      execute "cd #{release_path} ; bundle config build.pg --with-pg-config=/usr/pgsql-9.3/bin/pg_config"
     end
   end
-  
-  after :publishing, :config
-  after :publishing, :dirs
-  
-  desc 'Restart application'
-  task :restart do
-    # on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
-    # end
-    Rake::Task['service:copy'].invoke
-    Rake::Task['service:restart'].invoke
-    Rake::Task['nginx:restart'].invoke
-  end
-  
-  after :dirs, :restart
 
-  # after :restart, :clear_cache do
-  #   on roles(:web), in: :groups, limit: 3, wait: 10 do
-  #     # Here we can do anything such as:
-  #     # within release_path do
-  #     #   execute :rake, 'cache:clear'
-  #     # end
-  #   end
-  # end
-  
+  desc 'Restart application'
+  task restart: ['systemd:restart', 'nginx:restart']
+
+  after :publishing, :secrets
+  # after :publishing, :db_config
+  after :finishing, :restart
+  after :finishing, :cleanup
+
 end
+
+before  'bundler:install', 'deploy:pg_gem'
+before  'deploy:migrate', 'deploy:db_config'
