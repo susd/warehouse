@@ -26,7 +26,7 @@ set :pty, true
 set :linked_files, %w{config/database.yml config/secrets.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{bin log public/uploads tmp/pids tmp/cache tmp/sockets}
+set :linked_dirs, %w{bin log public/uploads tmp/pids tmp/cache tmp/sockets config/nginx}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -38,7 +38,7 @@ namespace :setup do
   desc 'Upload Nginx config'
   task :nginx do
     on roles(:app) do
-      upload! "config/nginx_#{fetch(:stage)}.conf", "#{shared_path}/config/"
+      upload! "config/nginx/#{fetch(:stage)}.conf", "#{shared_path}/config/nginx/"
     end
   end
 
@@ -78,7 +78,7 @@ namespace :nginx do
   desc 'Enable site'
   task :enable do
     on roles(:app) do
-      execute "ln -fs #{shared_path}/config/nginx_#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}-nginx.conf"
+      execute "ln -fs #{shared_path}/config/nginx/#{fetch(:stage)}.conf /etc/nginx/sites-enabled/#{fetch(:application)}-nginx.conf"
     end
   end
 

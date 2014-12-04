@@ -21,5 +21,10 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  host: <%= Rails.application.secrets[:database][:host] %>
+  pool: 5
+  encoding: unicode
+  username: <%= Rails.application.secrets[:database][:username] %>
+  password: <%= Rails.application.secrets[:database][:password] %>
+  database: <%= Rails.application.secrets[:database][:name] %>
