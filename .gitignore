@@ -18,5 +18,6 @@
 /config/secrets.yml
 /config/deploy/*
 /config/deploy.rb
+/config/nginx/*
 
 /public/uploads
