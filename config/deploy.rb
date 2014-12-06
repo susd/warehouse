@@ -160,3 +160,4 @@ end
 
 before  'bundler:install', 'deploy:pg_gem'
 before  'deploy:migrate', 'deploy:db_config'
+after   'deploy:db_config', 'deploy:secrets'
