@@ -34,6 +34,9 @@ module OrderQuerying
     if site_id.present?
       relation.where(site_id: site_id)
     else
+      if current_user.site.nil?
+        return relation
+      end
       if current_user.views_all_orders?
         relation
       else
