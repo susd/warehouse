@@ -4,7 +4,7 @@ class CreateLineItems < ActiveRecord::Migration
       t.belongs_to :product, index: true
       t.belongs_to :order, index: true
       t.integer :quantity
-      t.money :total
+      t.integer :total_cents, default: 0, null: false
 
       t.timestamps
     end
