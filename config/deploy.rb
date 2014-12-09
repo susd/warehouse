@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+# lock '3.2.1'
 
 set :application, 'warehouse'
 set :repo_url, 'https://github.com/susd/warehouse.git'
