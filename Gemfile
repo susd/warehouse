@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.1'
-gem 'sqlite3'
+gem 'rails', '~> 4.2.0.rc2'
+# gem 'sqlite3'
 gem 'pg'
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
@@ -34,10 +34,10 @@ end
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
-  # gem 'byebug'
+  gem 'byebug'
 
   # Access an IRB console on exceptions page and /console in development
-  # gem 'web-console', '~> 2.0.0.beta2'
+  gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

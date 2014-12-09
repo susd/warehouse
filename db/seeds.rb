@@ -31,10 +31,10 @@ sites.each do |site|
 end
 
 roles = [
-  { name: 'Admin' },
-  { name: 'Office' },
-  { name: 'Warehouse' },
-  { name: 'Finance' }
+  { name: 'admin' },
+  { name: 'office' },
+  { name: 'warehouse' },
+  { name: 'finance' }
 ]
 
 roles.each do |role|
