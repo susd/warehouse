@@ -15,7 +15,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def failure
     #handle you logic here..
     #and delegate to super.
-    binding.pry
     super
   end
   
