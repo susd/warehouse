@@ -38,7 +38,7 @@ module OrderWorkflow
       submitted:  [:warehouse, :finance, :custodial, :admin],
       fulfilled:  [:finance, :admin],
       archived:   [],
-      cancelled:   []
+      cancelled:  []
     }
   end
   
