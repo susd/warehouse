@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20141010222848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "comments", force: true do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "order_id"
     t.text     "body"
@@ -27,13 +27,13 @@ ActiveRecord::Schema.define(version: 20141010222848) do
   add_index "comments", ["order_id"], name: "index_comments_on_order_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
-  create_table "imports", force: true do |t|
+  create_table "imports", force: :cascade do |t|
     t.string   "catalog_file"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "line_items", force: true do |t|
+  create_table "line_items", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "order_id"
     t.integer  "quantity",    default: 1
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20141010222848) do
   add_index "line_items", ["order_id"], name: "index_line_items_on_order_id", using: :btree
   add_index "line_items", ["product_id"], name: "index_line_items_on_product_id", using: :btree
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.integer  "site_id"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20141010222848) do
   add_index "orders", ["site_id"], name: "index_orders_on_site_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
-  create_table "product_groups", force: true do |t|
+  create_table "product_groups", force: :cascade do |t|
     t.string   "name"
     t.string   "budget"
     t.datetime "created_at"
@@ -64,12 +64,12 @@ ActiveRecord::Schema.define(version: 20141010222848) do
     t.integer  "group_number"
   end
 
-  create_table "products", force: true do |t|
+  create_table "products", force: :cascade do |t|
     t.string   "item_id"
     t.string   "description"
     t.string   "measure"
-    t.money    "cost",             scale: 2
-    t.integer  "state",                      default: 0
+    t.integer  "cost_cents",       default: 0, null: false
+    t.integer  "state",            default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_group_id"
@@ -77,18 +77,18 @@ ActiveRecord::Schema.define(version: 20141010222848) do
 
   add_index "products", ["product_group_id"], name: "index_products_on_product_group_id", using: :btree
 
-  create_table "roles", force: true do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "roles_users", id: false, force: true do |t|
+  create_table "roles_users", id: false, force: :cascade do |t|
     t.integer "role_id"
     t.integer "user_id"
   end
 
-  create_table "sites", force: true do |t|
+  create_table "sites", force: :cascade do |t|
     t.string   "name"
     t.integer  "code"
     t.string   "abbr"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20141010222848) do
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
