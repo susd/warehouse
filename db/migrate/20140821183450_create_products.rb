@@ -4,7 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :item_id
       t.string :description
       t.string :measure
-      t.money :cost, currency: { present: false }
+      t.integer :cost_cents, default: 0, null: false
       t.integer :state, default: 0 
 
       t.timestamps
