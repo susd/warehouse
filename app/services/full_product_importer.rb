@@ -4,7 +4,7 @@ class FullProductImporter
   attr_reader :data
   
   def initialize(path)
-    @data = flatten CSV.read(path)
+    @data = read_without_blank_rows path
   end
   
   def page_header?(row)
@@ -65,7 +65,8 @@ class FullProductImporter
   
   private
   
-  def flatten(data)
+  def read_without_blank_rows(path)
+    data = CSV.read(path)
     data.map{ |a| a.compact }.keep_if{ |a| a.any? }
   end
   
