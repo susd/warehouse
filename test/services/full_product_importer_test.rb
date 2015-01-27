@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class ProductImporterTest < ActiveSupport::TestCase
+class FullProductImporterTest < ActiveSupport::TestCase
   
   setup do
-    @importer = ProductImporter.new('test/fixtures/catalog.csv')
+    @importer = FullProductImporter.new('test/fixtures/catalog.csv')
   end
   
   test "Reading a CSV file" do

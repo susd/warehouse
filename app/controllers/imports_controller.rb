@@ -5,7 +5,7 @@ class ImportsController < ApplicationController
   
   def create
     @import = Import.new import_params
-    importer = ProductImporter.new(@import.catalog_file.path)
+    importer = ProductImporter.import(@import.catalog_file.path)
     importer.import!
     redirect_to products_path, notice: 'Catalog updated'
   end
