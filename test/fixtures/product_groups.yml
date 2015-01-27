@@ -12,10 +12,21 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# WH-01, INSTRUCTIONAL SUPPLIES
+instructional_supplies:
+  group_number: 1
+  name: 'Instruction Supplies'
+  budget: ''
+
 # ["WH-02", " - ", "OFFICE SUPPLIES"]
 office_supplies:
   group_number: 2
   name: 'Office Supplies'
+  budget: ''
+  
+athletic_supplies:
+  group_number: 3
+  name: 'Athletic Supplies'
   budget: ''
 
 # one:
