@@ -17,7 +17,7 @@
 <%= state %>_order:
   site: cedarcreek
   user: office_user
-  state: <%= state %>
+  state: <%= Order.states[state] %>
 
 <% end %>
 

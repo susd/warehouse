@@ -2,6 +2,8 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
+require 'capybara/rails'
+
 require "minitest/reporters"
 Minitest::Reporters.use! Minitest::Reporters::ProgressReporter.new, ENV, Minitest.backtrace_filter
 
@@ -14,4 +16,16 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+end
+
+class ActionDispatch::IntegrationTest
+  # Make the Capybara DSL available in all integration tests
+  include Capybara::DSL
+  include Warden::Test::Helpers
+  
+  def with_user(user)
+    login_as(user, scope: :user)
+    yield if block_given?
+    logout(user)
+  end
 end
