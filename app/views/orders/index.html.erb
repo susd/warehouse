@@ -1,40 +1,60 @@
-<div class="page-header">
+<div class="page-header" data-no-turbolink>
   <h1>Listing orders</h1>
   <%= link_to 'New order', new_order_path, class: 'btn btn-primary' %>
 </div>
 
+<ul class="nav nav-tabs">
+  <%= active_li(action: 'index') do %>
+    <%= link_to 'All', orders_path %>
+  <% end %>
+  <%= active_li(action: 'draft') do %>
+    <%= link_to 'Drafts', draft_orders_path %>
+  <% end %>
+  <%= active_li(action: 'submitted') do %>
+    <%= link_to 'Submitted', submitted_orders_path %>
+  <% end %>
+  <%= active_li(action: 'fulfilled') do %>
+    <%= link_to 'Fulfilled', fulfilled_orders_path %>
+  <% end %>
+  <%= active_li(action: 'archived') do %>
+    <%= link_to 'Archived', archived_orders_path %>
+  <% end %>
+</ul>
 
 
-<table class="table table-striped clickable">
-  <thead>
-    <tr>
-      <th>Order #</th>
-      <th>Site</th>
-      <th>Started by</th>
-      <th>State</th>
-      <th>Total</th>
-      <th>Options</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @orders.each do |order| %>
-      <tr href="<%= order_path(order) %>">
-        <td>
-          <%= order.id %>
-        </td>
-        <td><%= order.site.name %></td>
-        <td><%= order.user.name %></td>
-        <td><%= order.state %></td>
-        <td><%= number_to_currency order.total %></td>        
-        <td>
-          <% if order.editable_by?(current_user) %>
-            <%= link_to 'View', order, class: 'btn btn-default' %>
-            <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-default' %>
-            <%= next_step_link_for( order ) %>
-          <% end %>
-        </td>
+<div data-no-turbolink>
+  <table class="table table-striped clickable">
+    <thead>
+      <tr>
+        <th>Order #</th>
+        <th>Site</th>
+        <th>Started by</th>
+        <th>State</th>
+        <th>Total</th>
+        <th>Options</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @orders.each do |order| %>
+        <tr class="order-row" href="<%= order_path(order) %>">
+          <td>
+            <%= order.id %>
+          </td>
+          <td><%= order.site.name %></td>
+          <td><%= order.user.name %></td>
+          <td><%= order.state %></td>
+          <td><%= number_to_currency order.total %></td>        
+          <td>
+            <% if order.editable_by?(current_user) %>
+              <%= link_to 'View', order, class: 'btn btn-default' %>
+              <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-default' %>
+              <%= next_step_link_for( order ) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+</div>

@@ -32,7 +32,7 @@ class Order < ActiveRecord::Base
   def add_product(params)
     current_item = line_items.find_by(product_id: params[:product_id])
     if current_item.present?
-      current_item.quantity += (params[:quantity] || 1)
+      current_item.quantity += (params[:quantity].to_i || 1)
     else
       current_item = line_items.build(params)
     end
