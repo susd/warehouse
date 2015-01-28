@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   include OrderPermissions
   include OrderQuerying
-  before_action :set_order, except: [:index, :archived, :new, :edit, :create]
+  before_action :set_order, except: [:index, :draft, :submitted, :fulfilled, :archived, :new, :edit, :create]
   before_action :set_groups, only: [:show, :new, :edit]
   after_action :authorize_for_orders
 
@@ -9,6 +9,21 @@ class OrdersController < ApplicationController
   # GET /orders.json
   def index
     @orders = orders_for_user.order(created_at: :desc)
+  end
+  
+  def draft
+    @orders = orders_for_user(:draft).order(created_at: :desc)
+    render template: 'orders/index'
+  end
+  
+  def submitted
+    @orders = orders_for_user(:submitted).order(created_at: :desc)
+    render template: 'orders/index'
+  end
+  
+  def fulfilled
+    @orders = orders_for_user(:fulfilled).order(created_at: :desc)
+    render template: 'orders/index'
   end
   
   def archived

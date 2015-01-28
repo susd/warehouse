@@ -1,7 +1,9 @@
 <%= form_for [order, LineItem.new], html: {class: 'form-inline'} do |f| %>
 <tr>
-  <td><%= product.item_id %></td>
-  <td><%= product.description %></td>
+  <td>
+    <%= product.description %><br>
+    <small><%= product.item_id %></small>
+  </td>
   <td><%= product.measure %></td>
   <td><%= product.cost %></td>
   <td>

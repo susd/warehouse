@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   end
   
   resources :orders do
-    get :archived, on: :collection
+    collection do
+      get :draft
+      get :submitted
+      get :fulfilled
+      get :archived
+      # get :canceled
+    end
     
     member do
       put :submit
