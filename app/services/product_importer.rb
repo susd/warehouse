@@ -16,6 +16,10 @@ class ProductImporter
     row.include? "Page No"
   end
   
+  def import!
+    @strategy.import!
+  end
+  
   private
   
   def determine_strategy_for(path)

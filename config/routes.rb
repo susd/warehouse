@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
   
   resources :products
+  resources :product_groups
   resources :imports, only: [:new, :create]
   
   namespace :admin do
