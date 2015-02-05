@@ -19,8 +19,8 @@ class OrdersControllerTest < ActionController::TestCase
 
   test "should get new" do
     get :new
-    # assert_response :success
-    assert_redirected_to edit_order_path(assigns(:order))
+    assert_response :success
+    # assert_redirected_to edit_order_path(assigns(:order))
   end
 
   # test "should create order" do

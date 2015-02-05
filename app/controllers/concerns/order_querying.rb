@@ -22,6 +22,10 @@ module OrderQuerying
   end
   
   def scope_orders_by_role(relation)
+    if current_user.admin?
+      return relation
+    end
+    
     if current_user.office?
       states = [0,1,2]
     else

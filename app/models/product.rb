@@ -21,4 +21,8 @@ class Product < ActiveRecord::Base
   belongs_to :product_group
   has_many :line_items
   has_many :orders, through: :line_items
+  
+  def search_str
+    "#{item_id} #{description}".gsub(/\"/,'')
+  end
 end
