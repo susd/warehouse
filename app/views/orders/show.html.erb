@@ -1,6 +1,6 @@
 <div class="row">
   
-  <div class="col-md-2">
+  <div class="col-md-3">
     <p>
       <%= link_to orders_path, class: 'btn btn-default' do %>
         <span class="glyphicon glyphicon-arrow-left"></span>
@@ -9,16 +9,68 @@
     </p>
     
     <% if @order.editable_by? current_user %>
+      <div class="btn-group-vertical">
+        <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary' %>
+        
+        <% if @order.draft? %>
+          <%= link_to 'Send to Warehouse', submit_order_path(@order), class: 'btn btn-default', method: :put %>
+        <% end %>
+      </div>
+    <% end %>
+    
+    <hr>
+    
+    <% @order.approvals.each do |approval| %>
+      <div class="label label-success">
+        <span class="glyphicon glyphicon-ok"></span> Approved by <%= approval.role.name %>
+      </div>
+    <% end %>
+    
+    <hr>
+    
+    <% if @order.approvable_by? current_user %>
+      <div class="btn-group-vertical">
+        <% current_user.roles.where(name: ['warehouse', 'custodial']).each do |role| %>
+          
+          <% unless @order.approvals.where(role: role).any? %>
+            
+            <%= form_for [@order, Approval.new] do |f| %>
+              <%= f.hidden_field :role_id, value: role.id %>
+              <%= f.submit "Approve as #{role.name}"  %>
+            <% end %>
+            
+          <% end %>
+          
+        <% end %>
+      </div>
+      
+      <hr>
+    <% end %>
+    
+    <% if @order.site.present? %>
     <p>
-      <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary' %>
-    </p>
-    <p>
-      <%= link_to 'Send to Warehouse', submit_order_path(@order), class: 'btn btn-default', method: :put %>
+      <strong><%= @order.site.name %></strong>
     </p>
     <% end %>
+    <p>
+      <strong>Started by:</strong><br>
+      <%= @order.user.name %>
+    </p>
+    <p>
+      <strong>Started:</strong><br>
+      <%= @order.created_at.to_s(:short) %>
+    </p>
+    <p>
+      <strong>Edited:</strong><br>
+      <%= @order.updated_at.to_s(:short) %>
+    </p>
+    <p>
+      <strong>State:</strong>
+      <%= @order.state %>
+    </p>
   </div>
   
-  <div class="col-md-8">
+  <div class="col-md-9">
     <%= render @order %>
     
     <hr>
@@ -41,28 +93,6 @@
     </div>
     
   </div>
-  
-  <div class="col-md-2">
-    <p>
-      <strong><%= @order.site.name %></strong>
-    </p>
-    <p>
-      <strong>Started by:</strong><br>
-      <%= @order.user.name %>
-    </p>
-    <p>
-      <strong>Started:</strong><br>
-      <%= @order.created_at.to_s(:short) %>
-    </p>
-    <p>
-      <strong>Edited:</strong><br>
-      <%= @order.updated_at.to_s(:short) %>
-    </p>
-    <p>
-      <strong>State:</strong>
-      <%= @order.state %>
-    </p>
-  </div>
-  
+    
 </div>
 

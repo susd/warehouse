@@ -1,18 +1,17 @@
 # == Schema Information
 #
-# Table name: comments
+# Table name: approvals
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
-#  order_id   :integer
-#  body       :text
-#  created_at :datetime
-#  updated_at :datetime
+#  role_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 require 'test_helper'
 
-class CommentTest < ActiveSupport::TestCase
+class ApprovalTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

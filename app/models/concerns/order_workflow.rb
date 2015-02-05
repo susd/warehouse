@@ -42,9 +42,25 @@ module OrderWorkflow
     }
   end
   
+  def approvables
+    {
+      draft: [],
+      submitted: [:warehouse, :custodial],
+      fulfilled: [],
+      archived: [],
+      cancelled: []
+    }
+  end
+  
   def editable_by?(user)
     user.roles.any? do |role|
       self.permissions[self.state.to_sym].include? role.name.downcase.to_sym
+    end
+  end
+  
+  def approvable_by?(user)
+    user.roles.any? do |role|
+      self.approvables[self.state.to_sym].include? role.name.downcase.to_sym
     end
   end
   

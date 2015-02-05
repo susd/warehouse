@@ -3,8 +3,8 @@
 # Table name: product_groups
 #
 #  id           :integer          not null, primary key
-#  name         :string(255)
-#  budget       :string(255)
+#  name         :string
+#  budget       :string
 #  created_at   :datetime
 #  updated_at   :datetime
 #  group_number :integer

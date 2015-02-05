@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     
     resources :line_items
     resources :comments, only: [:create]
+    resources :approvals, only: [:create]
   end
   
   resources :products

@@ -3,11 +3,11 @@
 # Table name: products
 #
 #  id               :integer          not null, primary key
-#  item_id          :string(255)
-#  description      :string(255)
-#  measure          :string(255)
-#  cost_cents       :integer          default(0), not null
-#  state            :integer          default(0)
+#  item_id          :string
+#  description      :string
+#  measure          :string
+#  cost_cents       :integer          default("0"), not null
+#  state            :integer          default("0")
 #  created_at       :datetime
 #  updated_at       :datetime
 #  product_group_id :integer
