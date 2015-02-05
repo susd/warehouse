@@ -1,21 +1,20 @@
 # == Schema Information
 #
-# Table name: comments
+# Table name: approvals
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
-#  order_id   :integer
-#  body       :text
-#  created_at :datetime
-#  updated_at :datetime
+#  role_id    :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user: warehouse
-  body: MyText
+  user_id: 
+  role_id: 
 
 two:
-  user: office_manager
-  body: MyText
+  user_id: 
+  role_id: 

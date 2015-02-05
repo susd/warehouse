@@ -5,9 +5,9 @@
 #  id         :integer          not null, primary key
 #  site_id    :integer
 #  user_id    :integer
-#  state      :integer          default(0), not null
 #  created_at :datetime
 #  updated_at :datetime
+#  state      :integer          default("0"), not null
 #
 
 require 'test_helper'

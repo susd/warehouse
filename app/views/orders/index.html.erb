@@ -50,7 +50,7 @@
           <% if order.editable_by?(current_user) %>
             <%= link_to 'View', order, class: 'btn btn-default' %>
             <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-default' %>
-            <%= next_step_link_for( order ) %>
+            <%# next_step_link_for( order ) %>
           <% end %>
         </td>
       </tr>

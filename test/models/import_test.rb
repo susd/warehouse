@@ -3,7 +3,7 @@
 # Table name: imports
 #
 #  id           :integer          not null, primary key
-#  catalog_file :string(255)
+#  catalog_file :string
 #  created_at   :datetime
 #  updated_at   :datetime
 #

@@ -5,9 +5,9 @@
 #  id         :integer          not null, primary key
 #  site_id    :integer
 #  user_id    :integer
-#  state      :integer          default(0), not null
 #  created_at :datetime
 #  updated_at :datetime
+#  state      :integer          default("0"), not null
 #
 
 class Order < ActiveRecord::Base
@@ -20,6 +20,8 @@ class Order < ActiveRecord::Base
   
   has_many :products, through: :line_items
   has_many :comments
+  
+  has_many :approvals, dependent: :destroy
   
   validates :user_id, presence: true
   
