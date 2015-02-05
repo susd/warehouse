@@ -25,7 +25,7 @@ describe 'OrderForm', ->
     
   describe 'form with line_items', ->
     beforeEach ->
-      dom.item1 = dom.items.affix('tr.line_item')
+      dom.item1 = dom.items.affix('tr.line_item-fields')
       $(document).trigger 'page:load'
       
     it 'finds existing line_items', ->
