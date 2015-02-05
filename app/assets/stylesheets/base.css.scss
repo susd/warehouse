@@ -1,6 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@import "products";
+@import "order_form";
+@import "line_items";
+
 body{
   padding: 70px 0 0 0;
 }
@@ -33,46 +37,13 @@ table.clickable > tbody > tr:nth-child(2n+1):hover > td{
   margin: -7px 0 -5px 0;
 }
 
-.products-table{
-  // override bootstrap rules
-  tr:nth-child(odd) td:first-child, tr:nth-child(even) td:first-child{
-    min-width: 5.5em;
-  }
-  // 2nd column
-  tr td:first-child+td, tr th:first-child+th{
-    width: 50%;
-  }
-  // 3rd column
-  tr td:first-child+td+td, tr th:first-child+th+th{
-    max-width: 4em;
-    width: 4em;
-  }
-  // 4th column
-  tr td:first-child+td+td+td, tr th:first-child+th+th+th{
-    max-width: 4em;
-    width: 4em;
-    text-align: right;
-  }
-  // 5th column
-  tr td:first-child+td+td+td+td, tr th:first-child+th+th+th+th{
-    width: 4em;
-  }
-  
-  tr th:last-child, tr td:last-child{
-    width: 10em;
-  }
-  .line_item_quantity{
-    width: 2em;
-  }
-}
-
 #order-panel{
   width: 95%;
   margin: 0 auto;
   max-width: 39.6em;
 }
 
-#order_items{
+#order-items{
   width: 100%;
   tr td:nth-child(3){
     //width: 75%;
@@ -111,10 +82,4 @@ table.clickable > tbody > tr:nth-child(2n+1):hover > td{
   }
 }
 
-#product-list{
-  height: 75vh;
-  max-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  border: 1px solid #eee;
-}
+.js-template{ display: none; }

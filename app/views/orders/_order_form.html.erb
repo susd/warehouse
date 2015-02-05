@@ -1,48 +1,67 @@
-<%= form_for(@order) do |f| %>
-  <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+<%= order_section_tag @order do %>
+  <%= form_for(@order) do |f| %>
+    <% if @order.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <% unless @order.line_items.any? %>
+      <p class="order-empty_state">There are no items in your order yet.</p>
+    <% end %>
+
+    <table id="order-items" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Desc</th>
+          <th>Qty</th>
+          <th>Unit</th>
+          <th>Item Total</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= f.fields_for :line_items do |item_fields| %>
+          <%= render partial: 'line_items/line_item_fields', locals: {f: item_fields} %>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <div class="order-total">
+      <strong>Total</strong><br>
+      <span data-bind="order-total"><%= number_to_currency @order.total %></span>
     </div>
+
+    <div class="actions">
+      <%= f.submit 'Update and Save' %>
+    </div>
+
   <% end %>
-
-  <% if @order.line_items.any? %>
-
-  <table id="order_items" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Desc</th>
-        <th>Qty</th>
-        <th>Unit</th>
-        <th>Cost</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= f.fields_for :line_items do |item_fields| %>
-        <%= render partial: 'line_items/line_item_fields', locals: {f: item_fields} %>
-      <% end %>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><%= number_to_currency @order.total %></td>
-        <td></td>
-      </tr>
-    </tbody>
+  
+  <table class="js-template" id="line_item-template">
+    <tr class="line_item-fields">
+      <td style="display:none">
+        <div class="line_item-id"><%= hidden_field_tag 'order[line_items_attributes][-##-][id]' %></div>
+        <div class="line_item-product_id"><%= hidden_field_tag 'order[line_items_attributes][-##-][product_id]' %></div>
+      </td>
+      <td class="line_item-description"></td>
+      <td class="line_item-quantity">
+        <%= text_field_tag 'order[line_items_attributes][-##-][quantity]', 1, size: 2 %>
+      </td>
+      <td class="line_item-measure"></td>
+      <td class="line_item-total">$0.00</td>
+      <td class="line_item-remove">
+        <%= hidden_field_tag 'order[line_items_attributes][-##-][_destroy]' %>
+        <a href="#" class="btn btn-xs btn-danger line_item-remove_btn">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+      </td>
+    </tr>
   </table>
-
-  <div class="actions">
-    <%= f.submit 'Update and Save' %>
-  </div>
-
-  <% else %>
-    There are no items in your order yet.
-  <% end %>
-
 <% end %>

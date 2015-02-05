@@ -14,4 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require_tree .
+//= require jquery.ba-throttle-debounce
+//= require app
+//= require _element
+//= require product_select
+//= require order_form

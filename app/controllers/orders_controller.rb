@@ -40,7 +40,6 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = new_order_for current_user
-    redirect_to edit_order_path(@order)
   end
 
   # GET /orders/1/edit
@@ -113,7 +112,7 @@ class OrdersController < ApplicationController
   end
   
   def set_groups
-    @groups = ProductGroup.includes(:products)
+    @groups = ProductGroup.order(:group_number).includes(:products)
   end
   
   def order_params
@@ -121,7 +120,7 @@ class OrdersController < ApplicationController
   end
   
   def new_order_for(user)
-    Order.create(user: user, site: user.site)
+    Order.new(user: user, site: user.site)
   end
   
   def handle_state_change(state, msg)

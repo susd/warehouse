@@ -1,15 +1,17 @@
-<tr class="line_item-fields">
-  <%= f.hidden_field :id %>
-  <%= f.hidden_field :product_id %>
-  <td><%= f.object.description %></td>
-  <td>
+<tr class="line_item-fields" data-unit_cost="<%= f.object.product.cost_cents %>">
+  <td style="display:none">
+    <div class="line_item-id"><%= f.hidden_field :id %></div>
+    <div class="line_item-product_id"><%= f.hidden_field :product_id %></div>
+  </td>
+  <td class="line_item-description"><%= f.object.description %></td>
+  <td class="line_item-quantity">
     <%= f.text_field :quantity, size: 2 %>
   </td>
-  <td><%= f.object.measure %></td>
-  <td><%= number_to_currency f.object.total %></td>
-  <td>
+  <td class="line_item-measure"><%= f.object.measure %></td>
+  <td class="line_item-total"><%= number_to_currency f.object.total %></td>
+  <td class="line_item-remove">
     <%= f.hidden_field :_destroy %>
-    <a href="#" class="btn btn-xs btn-danger line_item-remove">
+    <a href="#" class="btn btn-xs btn-danger line_item-remove_btn">
       <span class="glyphicon glyphicon-remove"></span>
     </a>
   </td>

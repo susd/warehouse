@@ -1,4 +1,3 @@
-<%= form_for [order, LineItem.new], html: {class: 'form-inline'} do |f| %>
 <tr>
   <td>
     <%= product.description %><br>
@@ -8,15 +7,14 @@
   <td><%= product.cost %></td>
   <td>
     <div class="form-group">
-      <%= f.label :quantity, class: 'sr-only' %>
-      <%= f.text_field :quantity, placeholder: 'qty', size: 2, id: nil, class: 'line_item_quantity' %>
+      <%= label_tag :quantity, nil, class: 'sr-only' %>
+      <%= text_field_tag :quantity, nil, placeholder: 'qty', size: 2, id: nil, class: 'line_item_quantity' %>
     </div>
   </td>
   <td>
     <div class="form-group">
-      <%= f.hidden_field :product_id, value: product.id %>
-      <%= f.submit 'Add to order', class: 'btn btn-xs btn-default' %>
+      <%= hidden_field_tag :product_id, product.id %>
+      <%= link_to 'Add to order', '#', class: 'btn btn-xs btn-default' %>
     </div>
   </td>
 </tr>
-<% end %>

@@ -11,7 +11,7 @@ class LineItemsController < ApplicationController
   private
   
   def set_order
-    @order = Order.find(params[:order_id])
+    @order = Order.find(params[:order_id]) || Order.new(user: current_user)
   end
   
   def line_item_params

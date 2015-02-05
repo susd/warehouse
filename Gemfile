@@ -45,6 +45,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'pry-rails'
   gem 'meta_request'
+  gem 'jasmine-rails'
 end
 
 group :test do
@@ -54,3 +55,7 @@ group :test do
   gem 'capybara'
 end
 
+source 'https://rails-assets.org' do
+  gem 'rails-assets-jasmine-fixture', group: [:development, :test]
+  gem 'rails-assets-jasmine-ajax', group: [:development, :test]
+end

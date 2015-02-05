@@ -1,22 +1,20 @@
-<header>
-  <div class="row">
-    <div class="col-sm-12">
-      <p>
-        <%= link_to @order, class: 'btn btn-default' do %>
-          <span class="glyphicon glyphicon-arrow-left"></span>
-          Cancel
-        <% end %>
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8">
-      <h1><%= @order.site.name %> Order</h1>
-    </div>
-    <div class="col-md-4">
-      <strong>Started:</strong> <%= @order.created_at.to_s(:short) %>
-    </div>
-  </div>
+<header class="page-header">
+  <h1><%= @order.site.name %> Order</h1>
 </header>
 
-<%= render 'form' %>
+<div class="row">
+  <div class="col-sm-2">
+    <p>
+      <strong>Started:</strong> <%= @order.created_at.to_s(:short) %>
+    </p>
+    <p>
+      <%= link_to @order, class: 'btn btn-default' do %>
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        Cancel
+      <% end %>
+    </p>
+  </div>
+  <div class="col-md-10">
+    <%= render 'form' %>
+  </div>
+</div>

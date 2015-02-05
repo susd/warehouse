@@ -1,31 +1,41 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6" id="product-list">
-      <% @groups.each do |group| %>
-        <h3><%= group.name %></h3>
-        <table class="products-table table table-striped">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Unit</th>
-              <th>Cost</th>
-              <th>Qty</th>
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <%= render partial: 'products/product_form', collection: group.products, as: 'product', locals: {order: @order} %>
-          </tbody>
-        </table>
-      <% end %>
-    </div>
-    <div class="col-md-6">
-      <div id="order-panel" class="panel panel-default" data-spy="affix" data-offset-top="40" data-offset-bottom="60">
-        <div class="panel-body">
-          <%= render 'order_form' %>
-        </div>
-      </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <h5>Order</h5>
     </div>
   </div>
+  <div class="panel-body">
+    <%= render 'order_form' %>
+  </div>
 </div>
+
+<hr>
+
+<div class="panel panel-default" id="order-options">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <h5>Products</h5>
+    </div>
+  </div>
+  <div class="panel-body">
+    <% @groups.each do |group| %>
+      <h3><%= group.name %></h3>
+      <table class="products-table table table-striped">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Description</th>
+            <th>Unit</th>
+            <th>Cost</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%= render partial: 'products/product_row', collection: group.products, as: 'product' %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>
+

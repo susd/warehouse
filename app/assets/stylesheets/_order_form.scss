@@ -1,0 +1,7 @@
+.order-empty_state{
+  display: none;
+}
+
+.order-empty{
+  .order-empty_state{ display: block; }
+}

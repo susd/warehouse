@@ -16,7 +16,13 @@
 class Product < ActiveRecord::Base
   monetize :cost_cents
   
+  validates_uniqueness_of :item_id
+  
   belongs_to :product_group
   has_many :line_items
   has_many :orders, through: :line_items
+  
+  def search_str
+    "#{item_id} #{description}".gsub(/\"/,'')
+  end
 end

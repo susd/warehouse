@@ -15,7 +15,7 @@ class Order < ActiveRecord::Base
   belongs_to :site
   belongs_to :user
   
-  has_many :line_items
+  has_many :line_items, dependent: :destroy
   accepts_nested_attributes_for :line_items, update_only: true, allow_destroy: true
   
   has_many :products, through: :line_items
@@ -48,7 +48,7 @@ class Order < ActiveRecord::Base
   end
   
   def total
-    total_cents / 100
+    total_cents.to_f / 100
   end
   
 end
