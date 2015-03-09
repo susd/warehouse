@@ -1,4 +1,4 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < AdminController
   before_action :set_user, except: :index
   before_action :set_roles_and_sites, except: :index
   

@@ -1,0 +1,20 @@
+<div class="page-header">
+  <h1>User Roles</h1>
+</div>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Ops</th>
+  </tr>
+  
+  <tbody>
+    <% @roles.each do |role| %>
+    <tr>
+      <td><%= role.name %></td>
+      <td><%= link_to 'Edit', edit_admin_role_path(role) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+  
+</table>
