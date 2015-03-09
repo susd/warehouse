@@ -1,6 +1,18 @@
 <h1>Editing product</h1>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+<div class="row">
+  <div class="col-md-2">
+    
+    <ul class="nav nav-stacked nav-pills">
+      <li><%= link_to 'Back', products_path %></li>
+      <li>
+        <%= link_to 'Delete', product_path(@product), method: :delete, data: {confirm: "Are you sure?"} %>
+      </li>
+    </ul>
+    
+  </div>
+  
+  <div class="col-md-10">
+    <%= render 'form' %>
+  </div>
+</div>
