@@ -1,14 +1,16 @@
-<h1>Editing product</h1>
+<div class="page-header">
+  <h1>Editing product</h1>
+</div>
 
 <div class="row">
   <div class="col-md-2">
     
-    <ul class="nav nav-stacked nav-pills">
-      <li><%= link_to 'Back', products_path %></li>
-      <li>
-        <%= link_to 'Delete', product_path(@product), method: :delete, data: {confirm: "Are you sure?"} %>
-      </li>
-    </ul>
+    <%= link_to products_path, class: 'btn btn-block btn-default' do %>
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      All Products
+    <% end %>
+    <hr>
+    <%= link_to 'Delete', product_path(@product), method: :delete, class: 'btn btn-block btn-danger', data: {confirm: "Are you sure?"} %>
     
   </div>
   
