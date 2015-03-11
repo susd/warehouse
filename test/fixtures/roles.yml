@@ -10,7 +10,7 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-<% %w{ office warehouse custodian finance admin }.each do |role| %>
+<% %w{ office principal warehouse custodian finance admin }.each do |role| %>
 
 <%= role %>_role:
   name: <%= role %>

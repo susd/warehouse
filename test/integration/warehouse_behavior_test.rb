@@ -4,7 +4,7 @@ class WarehouseBehaviorTest < ActionDispatch::IntegrationTest
   test "View orders" do
     with_user(users(:warehouse_user)) do
       visit orders_path
-      assert page.has_css?('.order-row', count: 2)
+      assert page.has_css?('.order-row')
     end
   end
 end
