@@ -6,6 +6,8 @@
 @import "order_form";
 @import "line_items";
 
+
+
 body{
   padding: 70px 0 0 0;
 }
@@ -84,3 +86,20 @@ table.clickable > tbody > tr:nth-child(2n+1):hover > td{
 }
 
 .js-template{ display: none; }
+
+@media (min-width: $screen-sm-min) {
+  .list-group-horiz{
+    @include clearfix();
+    .list-group-item{
+      float: left;
+      margin-left: -1px;
+      &:first-child{
+        border-radius: 4px 0 0 4px;
+        margin-left: 0;
+      }
+      &:last-child{
+        border-radius: 0 4px 4px 0;
+      }
+    }
+  }
+}

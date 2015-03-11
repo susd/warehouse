@@ -16,7 +16,7 @@ class Order < ActiveRecord::Base
   belongs_to :user
   
   has_many :line_items, dependent: :destroy
-  accepts_nested_attributes_for :line_items, update_only: true, allow_destroy: true
+  accepts_nested_attributes_for :line_items, allow_destroy: true
   
   has_many :products, through: :line_items
   has_many :comments

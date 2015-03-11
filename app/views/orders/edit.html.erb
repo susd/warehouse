@@ -1,12 +1,7 @@
-<header class="page-header">
-  <h1><%= @order.site.name %> Order</h1>
-</header>
+<%= render 'header' %>
 
 <div class="row">
-  <div class="col-sm-2">
-    <p>
-      <strong>Started:</strong> <%= @order.created_at.to_s(:short) %>
-    </p>
+  <div class="col-md-2">
     <p>
       <%= link_to @order, class: 'btn btn-default' do %>
         <span class="glyphicon glyphicon-arrow-left"></span>
