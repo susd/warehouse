@@ -32,17 +32,12 @@ module OrdersHelper
   def approval_button(role, order)
     approved = order.approvals.where(role: role).any?
     
-    # classes = ['list-group-item']
-    # classes << 'list-group-item-success' if approved
     classes = ['btn']
     if approved
       classes << 'btn-success'
     else
       classes << 'btn-default'
     end
-    # unless current_user.roles.include? role
-    #   classes << 'disabled'
-    # end
     
     icon = approved ? 'glyphicon-ok' : 'glyphicon-time'
     
