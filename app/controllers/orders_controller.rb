@@ -117,7 +117,7 @@ class OrdersController < ApplicationController
   end
   
   def set_groups
-    @groups = ProductGroup.order(:group_number).includes(:products)
+    @groups = ProductGroup.order(:group_number).includes(:active_products)
   end
   
   def order_params

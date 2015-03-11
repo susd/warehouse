@@ -16,6 +16,12 @@
   <%= f.text_field :measure %>
   <%= f.text_field :cost %>
   
+  <div class="form-group">
+    <label for="product_state" class="control-label">State</label><br>
+    <%= f.radio_button :state, 'enabled', label: "Enabled", checked: @product.enabled?, inline: true %>
+    <%= f.radio_button :state, 'disabled', label: "Disabled", checked: @product.disabled?, inline: true %>
+  </div>
+  
   <div class="actions">
     <%= f.submit 'Update Product', class: 'btn btn-primary' %>
   </div>

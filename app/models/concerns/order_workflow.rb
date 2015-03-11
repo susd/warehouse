@@ -5,7 +5,7 @@ module OrderWorkflow
     include AASM
     enum state: { draft: 0, reviewing: 1, submitted: 2, fulfilled: 3, archived: 4, cancelled: 5 }
     
-    aasm :column => :state, :whiny_transitions => false, enum: true do
+    aasm column: :state, whiny_transitions: false, enum: true do
       state :draft, :initial => true
       state :reviewing
       state :submitted

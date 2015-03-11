@@ -11,31 +11,6 @@
 
 <hr>
 
-<div class="panel panel-default" id="order-options">
-  <div class="panel-heading">
-    <div class="panel-title">
-      <h5>Products</h5>
-    </div>
-  </div>
-  <div class="panel-body">
-    <% @groups.each do |group| %>
-      <h3><%= group.name %></h3>
-      <table class="products-table table table-striped">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Description</th>
-            <th>Unit</th>
-            <th>Cost</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <%= render partial: 'products/product_row', collection: group.products, as: 'product' %>
-        </tbody>
-      </table>
-    <% end %>
-  </div>
+<div id="order-options">
+  <%= render @groups %>
 </div>
-

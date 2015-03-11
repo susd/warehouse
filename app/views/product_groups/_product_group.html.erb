@@ -1,15 +1,22 @@
-<h3><%= product_group.name %></h3>
-<table class="products-table table table-striped">
-  <thead>
-    <tr>
-      <th>Item</th>
-      <th>Description</th>
-      <th>UOM</th>
-      <th>Cost</th>
-    </tr>
-  </thead>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <h4><%= product_group.name %></h4>
+    </div>
+  </div>
+  
+  <table class="products-table table table-striped">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>UOM</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <%= render partial: 'products/product_row', collection: product_group.products, as: 'product' %>
-  </tbody>
-</table>
+    <tbody>
+      <%= render partial: 'products/product_row', collection: product_group.active_products, as: 'product' %>
+    </tbody>
+  </table>
+</div>

@@ -10,7 +10,7 @@
   .product-op{ display: none; }
 }
 
-#inventory{
+#inventory, #disabled_products{
   .product-op.product-edit { display: table-cell; }
 }
 
