@@ -3,18 +3,22 @@ module OrderWorkflow
   
   included do
     include AASM
-    enum state: { draft: 0, submitted: 1, fulfilled: 2, archived: 3, cancelled: 4 }
-    
+    enum state: { draft: 0, reviewing: 1, submitted: 2, fulfilled: 3, archived: 4, cancelled: 5 }
     
     aasm :column => :state, :whiny_transitions => false, enum: true do
       state :draft, :initial => true
+      state :reviewing
       state :submitted
       state :fulfilled
       state :archived
       state :cancelled
-
+      
+      event :review do
+        transitions from: :draft, to: :reviewing
+      end
+      
       event :submit do
-        transitions from: :draft, to: :submitted
+        transitions from: :reviewing, to: :submitted
       end
 
       event :fulfill do
@@ -26,7 +30,7 @@ module OrderWorkflow
       end
       
       event :cancel do
-        transitions from: [:draft, :submitted], to: :cancelled
+        transitions from: [:draft, :reviewing, :submitted], to: :cancelled
       end
     end
     
@@ -34,9 +38,10 @@ module OrderWorkflow
   
   def permissions
     {
-      draft:      [:office, :admin],
-      submitted:  [:warehouse, :finance, :custodial, :admin],
-      fulfilled:  [:finance, :admin],
+      draft:      [:admin, :office, :principal],
+      reviewing:  [:admin, :principal, :custodial],
+      submitted:  [:admin, :warehouse, :finance],
+      fulfilled:  [:admin, :finance],
       archived:   [],
       cancelled:  []
     }
@@ -45,7 +50,8 @@ module OrderWorkflow
   def approvables
     {
       draft: [],
-      submitted: [:warehouse, :custodial],
+      reviewing: [:custodial, :principal],
+      submitted: [],
       fulfilled: [],
       archived: [],
       cancelled: []

@@ -35,6 +35,7 @@ class OrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @comments = @order.comments.order(created_at: :desc)
+    @required_roles = Role.where(name: ['principal', 'custodial'])
   end
 
   # GET /orders/new
@@ -88,20 +89,24 @@ class OrdersController < ApplicationController
     end
   end
   
+  def review
+    handle_state_change("review!", "submitted for review.")
+  end
+  
   def submit
-    handle_state_change("submit!", "submitted")
+    handle_state_change("submit!", "submitted.")
   end
   
   def fulfill
-    handle_state_change("fulfill!", "marked fulfilled")
+    handle_state_change("fulfill!", "marked fulfilled.")
   end
   
   def archive
-    handle_state_change("archive!", "archived")
+    handle_state_change("archive!", "archived.")
   end
   
   def cancel
-    handle_state_change("cancel!", "cancelled")
+    handle_state_change("cancel!", "cancelled.")
   end
 
   private

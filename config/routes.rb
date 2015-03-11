@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
     
     member do
+      put :review
       put :submit
       put :fulfill
       put :archive

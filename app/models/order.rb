@@ -11,7 +11,7 @@
 #
 
 class Order < ActiveRecord::Base
-  # enum state: { draft: 0, submitted: 1, fulfilled: 2, archived: 3, canceled: 4 }
+  # enum state: { draft: 0, reviewing: 1, submitted: 2, fulfilled: 3, archived: 4, cancelled: 5 }
   belongs_to :site
   belongs_to :user
   
