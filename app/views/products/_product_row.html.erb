@@ -3,6 +3,13 @@
   <td class="product-desc"><%= product.description %></td>
   <td class="product-measure"><%= product.measure %></td>
   <td class="product-cost"><%= number_to_currency product.cost %></td>
-  <td class="product-op product-edit"><%= link_to 'Edit', edit_product_path(product) %></td>
-  <td class="product-op product-add"><%= link_to 'Add to order', 'javascript:;' %></td>
+  <td class="product-op product-view">
+    <%= link_to 'View', product_path(product), class: 'btn btn-default' %>
+  </td>
+  <td class="product-op product-edit">
+    <%= link_to 'Edit', edit_product_path(product), class: 'btn btn-default' %>
+  </td>
+  <td class="product-op product-add">
+    <%= link_to 'Add to order', 'javascript:;', class: 'btn btn-default' %>
+  </td>
 <% end %>

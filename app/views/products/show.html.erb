@@ -1,17 +1,25 @@
-<p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Item:</strong>
-  <%= @product.item_id %>
+  <%= link_to products_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    All Products
+  <% end %>
+</p>
+
+
+<div class="page-header">
+  <h1>
+    <%= @product.item_id %>
+    <small><%= @product.description %></small>
+  </h1>
+</div>
+
+<p>
+  <%= link_to 'Edit', edit_product_path(@product), class: 'btn btn-primary' %>
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @product.description %>
-</p>
-
-<p>
-  <strong>Measure:</strong>
+  <strong>Unit of Measure:</strong>
   <%= @product.measure %>
 </p>
 
@@ -20,5 +28,26 @@
   <%= @product.cost %>
 </p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <h4>Orders<h4>
+    </div>
+  </div>
+  
+  <table class="table table-striped">
+    <tr>
+      <th>Qty</th>
+      <th>Order</th>
+    </tr>
+    <% @line_items.each do |line_item| %>
+      <tr>
+        <td><%= line_item.quantity %></td>
+        <td><%= link_to "Order ##{line_item.order_id}", order_path(line_item.order_id) %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

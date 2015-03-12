@@ -5,6 +5,9 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
 
@@ -17,7 +20,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">SUSD Warehouse Orders</a>
+      <a class="navbar-brand" href="/">SUSD Warehouse</a>
     </div>
     
     <% if signed_in? %>

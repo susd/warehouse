@@ -12,4 +12,5 @@
 
 class ProductGroup < ActiveRecord::Base
   has_many :products
+  has_many :active_products, -> { where(state: 0) }, class_name: 'Product'
 end

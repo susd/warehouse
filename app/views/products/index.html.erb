@@ -14,9 +14,29 @@
   
 </div>
 
-<div class="container" id="inventory">
+<div id="inventory">
   <%= render @product_groups %>
 </div>
 
-<br>
+<div id="disabled_products" class="panel panel-danger">
+  <div class="panel-heading">
+    <div class="panel-title">
+      Disabled Products
+    </div>
+  </div>
+  
+  <table class="products-table table table-striped">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>UOM</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
 
+    <tbody>
+      <%= render partial: 'products/product_row', collection: @disabled, as: 'product' %>
+    </tbody>
+  </table>
+</div>

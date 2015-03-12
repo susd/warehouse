@@ -40,7 +40,7 @@ class App.OrderForm extends App.Element
     tpl = @newItemTemplate()
     item = @buildItem(tpl, product)
     @items.push item
-    @element.find('table#order-items').append(item.element)
+    @element.find('table#order-items .order-total').before(item.element)
     @element.removeClass('order-empty')
     @calcTotal()
     product.hide()
@@ -57,10 +57,6 @@ class App.OrderForm extends App.Element
     item
     
   bindEvents: ->
-    # @form.on 'submit', (e) =>
-    #   e.preventDefault()
-    #   console.log @form.serializeArray()
-    
     App.on 'order:qty_update order:item_added', ->
       App.order_form.calcTotal()
     

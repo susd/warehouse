@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150205170716) do
+ActiveRecord::Schema.define(version: 20150311222425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,4 +137,5 @@ ActiveRecord::Schema.define(version: 20150205170716) do
   add_foreign_key "approvals", "orders"
   add_foreign_key "approvals", "roles"
   add_foreign_key "approvals", "users"
+  add_foreign_key "line_items", "products"
 end

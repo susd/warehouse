@@ -12,7 +12,7 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-<% %w{draft submitted fulfilled archived cancelled}.each do |state| %>
+<% %w{draft reviewing submitted fulfilled archived cancelled}.each do |state| %>
 
 <%= state %>_order:
   site: cedarcreek

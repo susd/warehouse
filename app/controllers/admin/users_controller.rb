@@ -1,6 +1,7 @@
 class Admin::UsersController < AdminController
   before_action :set_user, except: :index
   before_action :set_roles_and_sites, except: :index
+  after_action :authorize_for_admin
   
   def index
     @users = User.all
