@@ -11,7 +11,8 @@
 }
 
 #inventory, #disabled_products{
-  .product-op.product-edit { display: table-cell; }
+  .product-op.product-edit,
+  .product-op.product-view { display: table-cell; }
 }
 
 #order-options{
@@ -19,6 +20,10 @@
 }
 
 .products-table{
+  .product-row > td{
+    vertical-align: middle;
+  }
+  
   // override bootstrap rules
   tr:nth-child(odd) td:first-child, tr:nth-child(even) td:first-child{
     min-width: 5.5em;

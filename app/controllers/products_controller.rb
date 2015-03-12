@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
   # GET /products/1
   # GET /products/1.json
   def show
+    @line_items = @product.line_items.order(created_at: :desc)
   end
 
   # GET /products/new
