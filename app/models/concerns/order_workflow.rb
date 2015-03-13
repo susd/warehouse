@@ -38,7 +38,7 @@ module OrderWorkflow
   
   def permissions
     {
-      draft:      [:admin, :office, :principal],
+      draft:      [:admin, :staff, :principal],
       reviewing:  [:admin, :principal, :custodial],
       submitted:  [:admin, :warehouse, :finance],
       fulfilled:  [:admin, :finance],

@@ -7,6 +7,16 @@ require 'capybara/rails'
 require "minitest/reporters"
 Minitest::Reporters.use! Minitest::Reporters::ProgressReporter.new, ENV, Minitest.backtrace_filter
 
+module WarehouseHelpers
+  def expected_roles
+    %w{ staff principal qty_control warehouse finance admin }
+  end
+  
+  def expected_order_states
+    %w{ draft reviewing submitted fulfilled archived cancelled }
+  end
+end
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
@@ -29,3 +39,5 @@ class ActionDispatch::IntegrationTest
     logout(user)
   end
 end
+
+ActiveRecord::FixtureSet.context_class.send :include, WarehouseHelpers

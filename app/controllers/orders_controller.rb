@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @comments = @order.comments.order(created_at: :desc)
-    @required_roles = Role.where(name: ['principal', 'custodial'])
+    @required_roles = Role.where(name: ['principal', 'qty_control'])
   end
 
   # GET /orders/new
@@ -111,7 +111,6 @@ class OrdersController < ApplicationController
 
   private
   
-    
   def set_order
     @order = Order.find(params[:id])
   end

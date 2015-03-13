@@ -26,7 +26,7 @@ module OrderQuerying
       return relation
     end
     
-    if current_user.office?
+    if current_user.staff?
       states = [0,1,2]
     else
       states = [1,2]

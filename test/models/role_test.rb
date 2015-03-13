@@ -11,7 +11,7 @@
 require 'test_helper'
 
 class RoleTest < ActiveSupport::TestCase
-  test "Office role" do
-    assert users(:office_user).office?
+  test "Staff role" do
+    assert users(:staff_user).staff?
   end
 end
