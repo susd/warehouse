@@ -3,7 +3,7 @@ require 'test_helper'
 class OrdersControllerTest < ActionController::TestCase
   setup do
     @order = orders(:draft_order)
-    @user = users(:office_user)
+    @user = users(:staff_user)
     sign_in @user
   end
 

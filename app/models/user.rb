@@ -77,8 +77,8 @@ class User < ActiveRecord::Base
     roles.pluck(:name).include? 'warehouse'
   end
   
-  def office?
-    roles.pluck(:name).include? 'office'
+  def staff?
+    roles.pluck(:name).include? 'staff'
   end
   
   def views_all_orders?

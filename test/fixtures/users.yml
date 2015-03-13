@@ -30,11 +30,11 @@
 # below each fixture, per the syntax in the comments below
 #
 
-office_user:
+staff_user:
   email: 'dude@example.com'
   encrypted_password: <%= User.new.send(:password_digest, 'password') %>
   site: cedarcreek
-  roles: office_role
+  roles: staff_role
   
 principal_user:
   email: 'principal@example.com'
@@ -42,7 +42,7 @@ principal_user:
   site: cedarcreek
   roles: principal_role
 
-<% %w{ warehouse custodian finance admin }.each do |role| %>
+<% %w{ warehouse qty_control finance admin }.each do |role| %>
 
 <%= role %>_user:
   email: "<%= role %>@example.com"

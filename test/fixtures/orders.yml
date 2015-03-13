@@ -12,21 +12,21 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-<% %w{draft reviewing submitted fulfilled archived cancelled}.each do |state| %>
+<% expected_order_states.each do |state| %>
 
 <%= state %>_order:
   site: cedarcreek
-  user: office_user
+  user: staff_user
   state: <%= Order.states[state] %>
 
 <% end %>
 
 one:
   site: mountainview
-  user: office_user
+  user: staff_user
   state: draft
 
 two:
   site: mountainview
-  user: office_user
+  user: staff_user
   state: submitted
