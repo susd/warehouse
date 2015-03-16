@@ -5,6 +5,7 @@ class ApprovalsController < ApplicationController
     @approval = @order.approvals.new(approval_params)
     
     if @approval.save
+      @order.approve! if @order.requirements_met?
       redirect_to @order, notice: 'Order approved.'
     else
       redirect_to @order, alert: "Order could not be approved."

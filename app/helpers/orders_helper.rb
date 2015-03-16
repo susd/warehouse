@@ -55,7 +55,7 @@ module OrdersHelper
     end
     
     link_to href, options do
-      content_tag(:span, nil, class: "glyphicon #{icon}") + " #{role.name.titlecase}"
+      content_tag(:span, nil, id: "approve_for_#{role}", class: "glyphicon #{icon}") + " #{role.name.titlecase}"
     end
   end
   

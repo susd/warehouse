@@ -16,6 +16,9 @@
   <%= active_li(action: 'submitted') do %>
     <%= link_to 'Submitted', submitted_orders_path %>
   <% end %>
+  <%= active_li(action: 'approved') do %>
+    <%= link_to 'Approved', approved_orders_path %>
+  <% end %>
   <%= active_li(action: 'fulfilled') do %>
     <%= link_to 'Fulfilled', fulfilled_orders_path %>
   <% end %>
@@ -47,8 +50,8 @@
         <td><%= order.state %></td>
         <td><%= number_to_currency order.total %></td>        
         <td>
+          <%= link_to 'View', order, class: 'btn btn-default' %>
           <% if order.editable_by?(current_user) %>
-            <%= link_to 'View', order, class: 'btn btn-default' %>
             <%= link_to 'Edit', edit_order_path(order), class: 'btn btn-default' %>
             <%# next_step_link_for( order ) %>
           <% end %>

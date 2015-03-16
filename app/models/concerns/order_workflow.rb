@@ -3,26 +3,26 @@ module OrderWorkflow
   
   included do
     include AASM
-    enum state: { draft: 0, reviewing: 1, submitted: 2, fulfilled: 3, archived: 4, cancelled: 5 }
+    enum state: { draft: 0, submitted: 1, approved: 2, fulfilled: 3, archived: 4, cancelled: 5 }
     
     aasm column: :state, whiny_transitions: false, enum: true do
       state :draft, :initial => true
-      state :reviewing
       state :submitted
+      state :approved
       state :fulfilled
       state :archived
       state :cancelled
       
-      event :review do
-        transitions from: :draft, to: :reviewing
+      event :submit do
+        transitions from: :draft, to: :submitted
       end
       
-      event :submit do
-        transitions from: :reviewing, to: :submitted
+      event :approve do
+        transitions from: :submitted, to: :approved
       end
 
       event :fulfill do
-        transitions from: :submitted, to: :fulfilled
+        transitions from: :approved, to: :fulfilled
       end
     
       event :archive do
@@ -30,17 +30,21 @@ module OrderWorkflow
       end
       
       event :cancel do
-        transitions from: [:draft, :reviewing, :submitted], to: :cancelled
+        transitions from: [:draft, :submitted, :approved], to: :cancelled
       end
     end
     
   end
   
+  def state_names
+    Order.states.keys.map(&:to_sym)
+  end
+  
   def permissions
     {
       draft:      [:admin, :staff, :principal],
-      reviewing:  [:admin, :principal, :custodial],
-      submitted:  [:admin, :warehouse, :finance],
+      submitted:  [:admin, :principal, :custodial],
+      approved:   [:admin, :warehouse, :finance],
       fulfilled:  [:admin, :finance],
       archived:   [],
       cancelled:  []
@@ -50,12 +54,28 @@ module OrderWorkflow
   def approvables
     {
       draft: [],
-      reviewing: [:custodial, :principal],
-      submitted: [],
+      submitted: [:principal, :quantity],
+      approved: [],
       fulfilled: [],
       archived: [],
       cancelled: []
     }
+  end
+  
+  def requirements
+    {
+      draft: [], submitted: [:principal, :quantity], approved: [], fulfilled: [], archived: [], cancelled: []
+    }
+  end
+  
+  def required_roles
+    Role.where(name: requirements[self.state.to_sym].map(&:to_s))
+  end
+  
+  def requirements_met?
+    required_roles.all? do |role|
+      approvals.where(role: role).any?
+    end
   end
   
   def editable_by?(user)

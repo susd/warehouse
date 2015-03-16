@@ -9,11 +9,11 @@ Minitest::Reporters.use! Minitest::Reporters::ProgressReporter.new, ENV, Minites
 
 module WarehouseHelpers
   def expected_roles
-    %w{ staff principal qty_control warehouse finance admin }
+    %w{ staff principal quantity warehouse finance admin }
   end
   
   def expected_order_states
-    %w{ draft reviewing submitted fulfilled archived cancelled }
+    %w{ draft submitted approved fulfilled archived cancelled }
   end
 end
 

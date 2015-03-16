@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   include OrderPermissions
   include OrderQuerying
-  before_action :set_order, except: [:index, :draft, :submitted, :fulfilled, :archived, :new, :edit, :create]
+  before_action :set_order, only:  [:show, :edit, :update, :destroy, :submit, :fulfill, :archive, :cancel]
   before_action :set_groups, only: [:show, :new, :edit]
   after_action :authorize_for_orders
 
@@ -21,13 +21,18 @@ class OrdersController < ApplicationController
     render template: 'orders/index'
   end
   
+  def approved
+    @orders = orders_for_user(:approved).order(created_at: :desc)
+    render template: 'orders/index'
+  end
+  
   def fulfilled
     @orders = orders_for_user(:fulfilled).order(created_at: :desc)
     render template: 'orders/index'
   end
   
   def archived
-    @orders = orders_for_user('archived').order(created_at: :desc)
+    @orders = orders_for_user(:archived).order(created_at: :desc)
     render template: 'orders/index'
   end
 
@@ -35,7 +40,7 @@ class OrdersController < ApplicationController
   # GET /orders/1.json
   def show
     @comments = @order.comments.order(created_at: :desc)
-    @required_roles = Role.where(name: ['principal', 'qty_control'])
+    @required_roles = Role.where(name: ['principal', 'quantity'])
   end
 
   # GET /orders/new
@@ -87,10 +92,6 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-  
-  def review
-    handle_state_change("review!", "submitted for review.")
   end
   
   def submit

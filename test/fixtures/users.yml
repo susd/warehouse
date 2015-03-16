@@ -42,7 +42,7 @@ principal_user:
   site: cedarcreek
   roles: principal_role
 
-<% %w{ warehouse qty_control finance admin }.each do |role| %>
+<% %w{ warehouse quantity finance admin }.each do |role| %>
 
 <%= role %>_user:
   email: "<%= role %>@example.com"
