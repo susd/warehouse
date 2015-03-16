@@ -144,7 +144,7 @@ namespace :deploy do
   desc 'Setup PG gem'
   task :pg_gem do
     on roles(:app) do
-      execute "cd #{release_path} ; bundle config build.pg --with-pg-config=/usr/pgsql-9.3/bin/pg_config"
+      execute "cd #{release_path} ; bundle config build.pg --with-pg-config=/usr/pgsql-9.4/bin/pg_config"
     end
   end
 
