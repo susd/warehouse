@@ -66,28 +66,34 @@ class User < ActiveRecord::Base
   end
   
   def role_names
-    roles.pluck(:name).join(', ')
+    @role_names ||= roles.pluck(:name)
   end
   
   def admin?
-    roles.pluck(:name).include? 'admin'
+    role_names.include? 'admin'
   end
   
   def warehouse?
-    roles.pluck(:name).include? 'warehouse'
+    role_names.include? 'warehouse'
   end
   
   def finance?
-    roles.pluck(:name).include? 'finance'
+    role_names.include? 'finance'
   end
   
   def staff?
-    roles.pluck(:name).include? 'staff'
+    role_names.include? 'staff'
+  end
+  
+  def approver?
+    ['principal', 'quantity'].any? do |role|
+      role_names.include? role
+    end
   end
   
   def views_all_orders?
-    roles.any? do |role|
-      %Q{admin warehouse finance}.include? role.name
+    role_names.any? do |role|
+      %Q{admin warehouse finance}.include? role
     end
   end
   
@@ -96,8 +102,8 @@ class User < ActiveRecord::Base
   end
   
   def manages_products?
-    roles.any? do |role|
-      %Q{admin finance}.include? role.name
+    role_names.any? do |role|
+      %Q{admin finance}.include? role
     end
   end
 end

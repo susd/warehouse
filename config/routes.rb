@@ -41,7 +41,30 @@ Rails.application.routes.draw do
     resources :roles
   end
   
+  authenticated :user, lambda {|u| u.staff?} do
+    root to: 'orders#draft', as: :staff_root
+  end
+  
+  authenticated :user, lambda {|u| u.approver?} do
+    root to: 'orders#submitted', as: :approver_root
+  end
+  
+  authenticated :user, lambda {|u| u.warehouse?} do
+    root to: 'orders#approved', as: :warehouse_root
+  end
+  
+  authenticated :user, lambda {|u| u.finance?} do
+    root to: 'orders#fulfilled', as: :finance_root
+  end
+  
+  # root to: 'orders#draft',      as: :staff_root,      constraints: RoleConstraint.new(:staff)
+  # root to: 'orders#approved',   as: :warehouse_root,  constraints: RoleConstraint.new(:warehouse)
+  # root to: 'orders#fulfilled',  as: :finance_root,    constraints: RoleConstraint.new(:finance)
+  # root to: 'orders#submitted',  as: :approval_root,   constraints: RoleConstraint.new(:principal, :quantity)
+  
   root to: 'orders#index'
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
