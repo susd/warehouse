@@ -18,7 +18,6 @@
     <hr>
     
     <div class="btn-toolbar">
-      
       <% unless @order.draft? %>
       <div class="btn-group">
         <% @required_roles.each do |role| %>
@@ -28,6 +27,10 @@
       <% end %>
       <% if @order.editable_by? current_user %>
         <div class="btn-group  pull-right">
+          <% if @order.approved? && current_user.warehouse? %>
+            <%= link_to 'Mark Order Fulfilled', fulfill_order_path(@order), class: 'btn btn-default', method: :put %>
+          <% end %>
+          
           <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary' %>
 
           <% if @order.draft? %>

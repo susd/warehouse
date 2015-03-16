@@ -45,4 +45,19 @@ class WorkflowTest < ActionDispatch::IntegrationTest
     end
   end
   
+  test "Warehouse list" do
+    with_user(users(:warehouse_user)) do
+      visit approved_orders_path
+      
+      assert page.has_css?('.order-row')
+    end
+  end
+  
+  test "Fulfilling order" do
+    with_user(users(:warehouse_user)) do
+      visit order_path(orders(:approved_order))
+      assert page.has_content?('Mark Order Fulfilled')
+    end
+  end
+  
 end
