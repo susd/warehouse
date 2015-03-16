@@ -7,6 +7,7 @@ class PrincipalBehaviorTest < ActionDispatch::IntegrationTest
   end
 
   test "View orders" do
+    skip
     with_user(@user) do
       visit orders_path
       assert page.has_css?('.order-row')
@@ -14,6 +15,7 @@ class PrincipalBehaviorTest < ActionDispatch::IntegrationTest
   end
 
   test "Approving an order" do
+    skip
     with_user(@user) do
       visit order_path(orders(:reviewing_order))
       click_link('Principal')

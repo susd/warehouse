@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     collection do
       get :draft
       get :submitted
+      get :approved
       get :fulfilled
       get :archived
       # get :canceled
