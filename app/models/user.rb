@@ -77,6 +77,10 @@ class User < ActiveRecord::Base
     roles.pluck(:name).include? 'warehouse'
   end
   
+  def finance?
+    roles.pluck(:name).include? 'finance'
+  end
+  
   def staff?
     roles.pluck(:name).include? 'staff'
   end

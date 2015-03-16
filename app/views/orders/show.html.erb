@@ -31,6 +31,10 @@
             <%= link_to 'Mark Order Fulfilled', fulfill_order_path(@order), class: 'btn btn-default', method: :put %>
           <% end %>
           
+          <% if @order.fulfilled? && current_user.finance? %>
+            <%= link_to 'Archive Order', archive_order_path(@order), class: 'btn btn-default', method: :put %>
+          <% end %>
+          
           <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary' %>
 
           <% if @order.draft? %>

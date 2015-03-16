@@ -56,7 +56,18 @@ class WorkflowTest < ActionDispatch::IntegrationTest
   test "Fulfilling order" do
     with_user(users(:warehouse_user)) do
       visit order_path(orders(:approved_order))
-      assert page.has_content?('Mark Order Fulfilled')
+      click_link('Mark Order Fulfilled')
+      
+      assert page.has_content? 'Order marked fulfilled.'
+    end
+  end
+  
+  test "Archiving order" do
+    with_user(users(:finance_user)) do
+      visit order_path(orders(:fulfilled_order))
+      click_link('Archive Order')
+      
+      assert page.has_content? 'Order archived.'
     end
   end
   
