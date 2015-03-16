@@ -45,7 +45,7 @@
         <td>
           <%= order.id %>
         </td>
-        <td><%= order.site.name %></td>
+        <td><%= order.site.name if order.site %></td>
         <td><%= order.user.name %></td>
         <td><%= order.state %></td>
         <td><%= number_to_currency order.total %></td>        
