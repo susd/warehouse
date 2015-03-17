@@ -59,4 +59,15 @@ module OrdersHelper
     end
   end
   
+  def new_order_button
+    options = {class: 'btn btn-primary'}
+    if current_user.site.orders.draft.any?
+      options[:data] = {toggle: 'modal', target: '#new_order_modal'}
+      link_to 'New Order', 'javascript:;', options
+    else
+      options[:id] = 'new_order_button'
+      link_to 'New order', new_order_path, options
+    end
+  end
+  
 end

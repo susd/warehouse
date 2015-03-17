@@ -1,8 +1,11 @@
 <div class="page-header">
-  <h1>Orders</h1>
+  <h1>
+    Orders
+    <small><%= @site.name if @site %></small>
+  </h1>
 </div>
 
-<%= link_to 'New order', new_order_path, class: 'btn btn-primary', id: 'new_order-btn' %>
+<%= new_order_button %>
 
 <hr>
 
@@ -61,4 +64,21 @@
   </tbody>
 </table>
 
-  
+<% if @draft_order %>
+<div class="modal fade" id="new_order_modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Do you need to start a new order?</h4>
+      </div>
+      <div class="modal-body">
+        An open order already exists. Are you sure you really need a new one?
+      </div>
+      <div class="modal-footer">
+        <%= link_to 'Start a new order', new_order_path, class: 'btn btn-default' %>
+        <%= link_to 'Continue with open order', order_path(@draft_order), class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

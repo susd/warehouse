@@ -2,13 +2,7 @@ Rails.application.routes.draw do
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
   
-  resources :sites, only: [:index] do
-    resources :orders, only: [:index] do
-      get :archived, on: :collection
-    end
-  end
-  
-  resources :orders do
+  concern :state_scopeable do
     collection do
       get :draft
       get :submitted
@@ -17,7 +11,13 @@ Rails.application.routes.draw do
       get :archived
       # get :canceled
     end
-    
+  end
+  
+  resources :sites, only: [:index] do
+    resources :orders, only: [:index], concerns: :state_scopeable
+  end
+  
+  resources :orders, concerns: :state_scopeable do
     member do
       put :review
       put :submit
@@ -41,7 +41,30 @@ Rails.application.routes.draw do
     resources :roles
   end
   
+  authenticated :user, lambda {|u| u.staff?} do
+    root to: 'orders#draft', as: :staff_root
+  end
+  
+  authenticated :user, lambda {|u| u.approver?} do
+    root to: 'orders#submitted', as: :approver_root
+  end
+  
+  authenticated :user, lambda {|u| u.warehouse?} do
+    root to: 'orders#approved', as: :warehouse_root
+  end
+  
+  authenticated :user, lambda {|u| u.finance?} do
+    root to: 'orders#fulfilled', as: :finance_root
+  end
+  
+  # root to: 'orders#draft',      as: :staff_root,      constraints: RoleConstraint.new(:staff)
+  # root to: 'orders#approved',   as: :warehouse_root,  constraints: RoleConstraint.new(:warehouse)
+  # root to: 'orders#fulfilled',  as: :finance_root,    constraints: RoleConstraint.new(:finance)
+  # root to: 'orders#submitted',  as: :approval_root,   constraints: RoleConstraint.new(:principal, :quantity)
+  
   root to: 'orders#index'
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
