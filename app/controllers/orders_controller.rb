@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   include OrderPermissions
   include OrderQuerying
   before_action :set_order, only:  [:show, :edit, :update, :destroy, :submit, :fulfill, :archive, :cancel]
+  before_action :set_site, only:   [:index, :draft, :submitted, :approved, :fulfilled, :archived]
   before_action :set_groups, only: [:show, :new, :edit]
   after_action :authorize_for_orders
 
@@ -118,6 +119,12 @@ class OrdersController < ApplicationController
   
   def set_groups
     @groups = ProductGroup.order(:group_number).includes(:active_products)
+  end
+  
+  def set_site
+    if params[:site_id]
+      @site = Site.by_param(params[:site_id])
+    end
   end
   
   def order_params

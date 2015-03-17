@@ -2,13 +2,7 @@ Rails.application.routes.draw do
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
   
-  resources :sites, only: [:index] do
-    resources :orders, only: [:index] do
-      get :archived, on: :collection
-    end
-  end
-  
-  resources :orders do
+  concern :state_scopeable do
     collection do
       get :draft
       get :submitted
@@ -17,7 +11,13 @@ Rails.application.routes.draw do
       get :archived
       # get :canceled
     end
-    
+  end
+  
+  resources :sites, only: [:index] do
+    resources :orders, only: [:index], concerns: :state_scopeable
+  end
+  
+  resources :orders, concerns: :state_scopeable do
     member do
       put :review
       put :submit
