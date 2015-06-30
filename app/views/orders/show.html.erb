@@ -1,8 +1,9 @@
 <%= render 'header' %>
 
+<% present @order do |presenter| %>
+
 <div class="row">
-  
-  <div class="col-md-8">
+  <div class="col-md-9">
     
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -15,61 +16,34 @@
       </div>
     </div>
     
-    <hr>
+  </div>
+  <div class="col-md-3">
     
-    <div class="btn-toolbar">
-      <% unless @order.draft? %>
-      <div class="btn-group">
-        <% @required_roles.each do |role| %>
-          <%= approval_button(role, @order) %>
-        <% end %>
-      </div>
-      <% end %>
-      <% if @order.editable_by? current_user %>
-        <div class="btn-group  pull-right">
-          <% if @order.approved? && current_user.warehouse? %>
-            <%= link_to 'Mark Order Fulfilled', fulfill_order_path(@order), class: 'btn btn-default', method: :put %>
-          <% end %>
-          
-          <% if @order.fulfilled? && current_user.finance? %>
-            <%= link_to 'Archive Order', archive_order_path(@order), class: 'btn btn-default', method: :put %>
-          <% end %>
-          
-          <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary' %>
-
-          <% if @order.draft? %>
-            <%= link_to 'Submit For Approval', submit_order_path(@order), class: 'btn btn-default', method: :put %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary'  %>
     
     <hr>
     
-  </div>
-  
-  <div class="col-md-4">
+    <section class="workflow_control">
+      <h4 class="workflow_control-title">Next Step</h4>
+      <%= presenter.workflow_button %>
+    </section>
     
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="panel-title">
-          Comments
-        </div>
-      </div>
-      <div class="panel-body">
-        <%= render @comments %>
-      </div>
-      <div class="panel-footer">
-        <%= form_for [@order, Comment.new] do |f| %>
-          <div class="form-group">
-            <%= f.text_area :body, class: 'form-control', placeholder: 'Add a comment' %>
-          </div>
-          <%= f.submit 'Send', class: 'btn btn-default' %>
-        <% end %>
-      </div>
-    </div>
-        
-  </div>
-  
+    <hr>
     
+    <% if presenter.show_approval_button? %>
+    <section class="workflow_control">
+      <h4 class="workflow_control-title">Quantity Approval</h4>
+      <%= presenter.approval_button %>
+    </section>
+    <% end %>
+    
+  </div>
 </div>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= render 'comments' %>
+  </div>
+</div>
+
+<% end %>

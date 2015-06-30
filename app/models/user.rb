@@ -91,6 +91,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def quantity_approver?
+    role_names.include? 'quantity'
+  end
+  
   def views_all_orders?
     role_names.any? do |role|
       %Q{admin warehouse finance}.include? role
