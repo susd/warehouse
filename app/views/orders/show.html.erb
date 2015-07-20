@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-md-9">
-    
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="panel-title">
@@ -15,28 +15,20 @@
         <%= render @order %>
       </div>
     </div>
-    
+
   </div>
   <div class="col-md-3">
-    
+
     <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary'  %>
-    
+
     <hr>
-    
+
     <section class="workflow_control">
       <h4 class="workflow_control-title">Next Step</h4>
       <%= presenter.workflow_button %>
     </section>
     
-    <hr>
-    
-    <% if presenter.show_approval_button? %>
-    <section class="workflow_control">
-      <h4 class="workflow_control-title">Quantity Approval</h4>
-      <%= presenter.approval_button %>
-    </section>
-    <% end %>
-    
+
   </div>
 </div>
 
