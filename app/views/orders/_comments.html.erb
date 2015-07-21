@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      Comments
+    </div>
+  </div>
+  <div class="panel-body">
+    <%= render @comments %>
+  </div>
+  <div class="panel-footer">
+    <%= form_for [@order, Comment.new] do |f| %>
+      <div class="form-group">
+        <%= f.text_area :body, class: 'form-control', placeholder: 'Add a comment' %>
+      </div>
+      <%= f.submit 'Send', class: 'btn btn-default' %>
+    <% end %>
+  </div>
+</div>

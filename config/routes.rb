@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
-  
+
   concern :state_scopeable do
     collection do
       get :draft
@@ -12,59 +12,60 @@ Rails.application.routes.draw do
       # get :canceled
     end
   end
-  
+
   resources :sites, only: [:index] do
     resources :orders, only: [:index], concerns: :state_scopeable
   end
-  
+
   resources :orders, concerns: :state_scopeable do
     member do
       put :review
       put :submit
+      put :approve
       put :fulfill
       put :archive
       put :cancel
     end
-    
+
     resources :line_items
     resources :comments, only: [:create]
     resources :approvals, only: [:create]
   end
-  
+
   resources :products
   resources :product_groups
   resources :imports, only: [:new, :create]
-  
+
   namespace :admin do
     resources :sites
     resources :users
     resources :roles
   end
-  
+
   authenticated :user, lambda {|u| u.staff?} do
     root to: 'orders#draft', as: :staff_root
   end
-  
+
   authenticated :user, lambda {|u| u.approver?} do
     root to: 'orders#submitted', as: :approver_root
   end
-  
+
   authenticated :user, lambda {|u| u.warehouse?} do
     root to: 'orders#approved', as: :warehouse_root
   end
-  
+
   authenticated :user, lambda {|u| u.finance?} do
     root to: 'orders#fulfilled', as: :finance_root
   end
-  
+
   # root to: 'orders#draft',      as: :staff_root,      constraints: RoleConstraint.new(:staff)
   # root to: 'orders#approved',   as: :warehouse_root,  constraints: RoleConstraint.new(:warehouse)
   # root to: 'orders#fulfilled',  as: :finance_root,    constraints: RoleConstraint.new(:finance)
   # root to: 'orders#submitted',  as: :approval_root,   constraints: RoleConstraint.new(:principal, :quantity)
-  
+
   root to: 'orders#index'
-  
-  
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
