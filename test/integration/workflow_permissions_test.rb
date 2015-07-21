@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PermissionsTest < ActionDispatch::IntegrationTest
+class WorkflowPermissionsTest < ActionDispatch::IntegrationTest
 
   test "Staff button visibility" do
     with_user(users(:staff_user)) do
