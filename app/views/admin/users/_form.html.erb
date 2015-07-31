@@ -1,4 +1,4 @@
-<%= form_for [:admin, @user] do |f| %>
+<%= bootstrap_form_for [:admin, @user] do |f| %>
 
 <div class="form-group">
   <p class="form-control-static">
@@ -9,18 +9,19 @@
   </p>
 </div>
 
-<div class="form-group">
-  <%= f.label :role_ids, 'Role' %>
-  <%= f.select :role_ids, @roles, include_blank: true %>
-</div>
+<%= f.label :role %>
 
-<div class="form-group">
-  <%= f.label :site_id %>
-  <%= f.select :site_id, @sites, include_blank: true %>
-</div>
+<% @roles.each do |role| %>
+  <div class="checkbox">
+    <%= label_tag dom_id(role) do %>
+      <%= check_box_tag 'user[role_ids][]', role.id, @user.role_ids.include?(role.id), id: dom_id(role) %>
+      <%= role.name %>
+    <% end %>
+  </div>
+<% end %>
 
+<%= f.select :site_id, @sites, include_blank: true %>
 
-<div class="form-group">
-  <%= f.submit 'Update User', class: 'btn btn-default' %>
-</div>
+<%= f.submit 'Update User', class: 'btn btn-default' %>
+
 <% end %>
