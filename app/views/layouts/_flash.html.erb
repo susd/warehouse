@@ -8,7 +8,7 @@
 </section>
 <% end %>
 
-<% if current_user.roles.empty? || current_user.site.nil? %>
+<% if current_user.roles.empty? && current_user.site.nil? %>
 <section class="flash">
   <div class="alert alert-warning">
     Your account isn't setup yet. Ask IT for help.
