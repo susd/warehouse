@@ -51,6 +51,9 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @order = order_for_user
+    unless @order.editable_by?(current_user)
+      redirect_to @order, alert: "Sorry you can't edit that."
+    end
   end
 
   # POST /orders

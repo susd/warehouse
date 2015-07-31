@@ -19,15 +19,15 @@
   </div>
   <div class="col-md-3">
 
-    <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary'  %>
-
+    <% if @order.editable_by?(current_user) %>
+      <%= link_to 'Edit this order', edit_order_path(@order), class: 'btn btn-primary'  %>
+    <% end %>
     <hr>
 
     <section class="workflow_control">
       <h4 class="workflow_control-title">Next Step</h4>
       <%= presenter.workflow_button %>
     </section>
-    
 
   </div>
 </div>

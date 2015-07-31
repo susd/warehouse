@@ -25,7 +25,7 @@ header{
 $highlight: mix(lighten(#ff0, 40%), #f00, 95%);
 
 
-table.clickable tr:hover > td, 
+table.clickable tr:hover > td,
 table.clickable > tbody > tr:nth-child(2n+1):hover > td{
     cursor: pointer;
     background: none;
@@ -38,6 +38,14 @@ table.clickable > tbody > tr:nth-child(2n+1):hover > td{
   width: 24px;
   height: auto;
   margin: -7px 0 -5px 0;
+}
+
+.alert-notice{
+  @extend .alert-success;
+}
+
+.alert-alert{
+  @extend .alert-danger;
 }
 
 #order-panel{
