@@ -13,23 +13,23 @@
 
 class LineItem < ActiveRecord::Base
   monetize :total_cents
-  
+
   belongs_to :product
-  belongs_to :order
-  
+  belongs_to :order, touch: true
+
   before_save :set_total
-  
+
   validates_numericality_of :quantity, greater_than: 0
   validates :product_id, presence: true
-  
+
   def set_total
     self.total_cents = (quantity * self.product.cost_cents)
   end
-  
+
   def description
     product.description
   end
-  
+
   def measure
     product.measure
   end
