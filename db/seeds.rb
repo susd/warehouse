@@ -8,6 +8,8 @@
 
 
 sites = [
+  { name: 'District Office', code: 5, abbr: 'do' },
+  { name: 'Maintenance', code: 6, abbr: 'mo' },
   { name: 'Cedarcreek School', code: 10, abbr: 'cc' },
   { name: 'Emblem School', code: 15, abbr: 'em' },
   { name: 'Highlands School', code: 20, abbr: 'hi' },
@@ -25,7 +27,7 @@ sites = [
   { name: 'Tesoro Del Valle School', code: 80, abbr: 'tv' },
   { name: 'West Creek Academy', code: 85, abbr: 'wc' }
   ]
-  
+
 sites.each do |site|
   Site.where(code: site[:code]).first_or_create(site)
 end
