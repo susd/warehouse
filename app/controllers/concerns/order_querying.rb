@@ -1,31 +1,33 @@
 module OrderQuerying
   extend ActiveSupport::Concern
-  
+
   def orders_for_user(state = nil)
-    relation = Order.all
+    return Order.none unless current_user.roles.any?
     
+    relation = Order.all
+
     if state.present?
       relation = scope_orders_by_state(relation, state)
     else
       relation = scope_orders_by_role(relation)
     end
-    
+
     scope_orders_by_site(relation, params[:site_id])
   end
-  
+
   def order_for_user
     orders_for_user.find(params[:id])
   end
-  
+
   def scope_orders_by_state(relation, state)
     relation.where(state: Order.states[state])
   end
-  
+
   def scope_orders_by_role(relation)
     if current_user.admin?
       return relation
     end
-    
+
     if current_user.staff?
       states = [0,1,2]
     else
@@ -33,7 +35,7 @@ module OrderQuerying
     end
     relation.where(state: states)
   end
-  
+
   def scope_orders_by_site(relation, site_id = nil)
     if site_id.present?
       relation.where(site_id: site_id)
@@ -48,5 +50,5 @@ module OrderQuerying
       end
     end
   end
-  
+
 end
